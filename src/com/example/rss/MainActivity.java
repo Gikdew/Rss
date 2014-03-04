@@ -2,24 +2,29 @@ package com.example.rss;
 
 import java.util.ArrayList;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
-import android.view.Menu;
-import android.widget.ListAdapter;
+import android.content.Context;
+import android.util.Log;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
 	public ArrayList<Video> Array_Video = new ArrayList<Video>();
 	private Video_adapter adapter;
+	private int startIndex = 1;
+	private String URL = "http://gdata.youtube.com/feeds/api/users/willyrex/uploads?max-results=50&start-index=" 
+			+ String.valueOf(startIndex)+"&alt=rss";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		
-		fillVideos();
-		
+		setContentView(R.layout.activity_main);		
+		fillVideos();		
 		initListView();
 	}
 
@@ -30,12 +35,47 @@ public class MainActivity extends Activity {
 	}
 
 	private void fillVideos() {
-		for(int i=1;i<500;i++){
-			Video vid = new Video();
-			vid.setTitle("Video " + String.valueOf(i));
-			vid.setLink("http://gikdew.com");
-			Array_Video.add(vid);
+		if(isOnline()){
+			startIndex = 10;
+			new DownloadVideos(getBaseContext(), URL).execute();
+		}else{
+			Log.i("isOnline", String.valueOf(isOnline()));
+		}
+	}
+
+	private boolean isOnline() {
+		ConnectivityManager cm = (ConnectivityManager) getApplication()
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo netInfo = cm.getActiveNetworkInfo();
+		if(netInfo != null && netInfo.isConnected()){
+			return true;
+		}
+		return false;
+	}
+	
+	public class DownloadVideos extends AsyncTask<String, Void, Boolean>{
+
+		private String feedUrl;
+		private Context ctx;
+		
+		public DownloadVideos(Context c, String url) {
+			this.ctx = c;
+			this.feedUrl = url;
+		}
+
+		@Override
+		protected Boolean doInBackground(final String ...args) {
+			XMLParser parser = new XMLParser(feedUrl, getBaseContext());
+			Array_Video = parser.parse();			
+			return false;
 		}
 		
+		@Override
+		protected void onPostExecute(Boolean success) {
+			initListView();
+		}
+
 	}
 }
+
+

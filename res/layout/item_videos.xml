@@ -3,32 +3,31 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp" >
+    android:padding="8dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp" >
+        android:padding="8dp">
 
         <ImageView
-            android:id="@+id/noticia_imageView"
+            android:id="@+id/video_imageView"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/ic_launcher" />
 
         <TextView
-            android:id="@+id/noticia_textview_title"
+            android:id="@+id/video_textview_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/noticia_imageView"
+            android:layout_alignTop="@+id/video_imageView"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="30dp"
-            android:layout_toRightOf="@+id/noticia_imageView"
+            android:layout_toRightOf="@+id/video_imageView"
             android:ellipsize="end"
             android:singleLine="true"
             android:textStyle="bold"
-            android:text="Titulo" />
+            android:text="@string/app_name"/>
        
     </RelativeLayout>
-
 </LinearLayout>

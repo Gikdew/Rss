@@ -26,11 +26,9 @@ public class Video_adapter extends ArrayAdapter<Object> {
 	
 	private static class PlaceHolder{
 		TextView title;
-		
 		public static PlaceHolder generate(View convertView){
 			PlaceHolder placeHolder = new PlaceHolder();
-			placeHolder.title = (TextView) convertView.findViewById(R.id.noticia_textview_title);
-			
+			placeHolder.title = (TextView) convertView.findViewById(R.id.video_textview_title);			
 			return placeHolder;
 		}
 	}
@@ -43,8 +41,7 @@ public class Video_adapter extends ArrayAdapter<Object> {
 			convertView.setTag(placeHolder);
 		}else{
 			placeHolder = (PlaceHolder) convertView.getTag();
-		}
-		
+		}		
 		placeHolder.title.setText(videos.get(position).getTitle());
 		return (convertView);
 		

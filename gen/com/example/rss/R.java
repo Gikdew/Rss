@@ -25,8 +25,8 @@ public final class R {
     }
     public static final class id {
         public static final int action_settings=0x7f080003;
-        public static final int noticia_imageView=0x7f080001;
-        public static final int noticia_textview_title=0x7f080002;
+        public static final int video_imageView=0x7f080001;
+        public static final int video_textview_title=0x7f080002;
         public static final int videos_listview=0x7f080000;
     }
     public static final class layout {

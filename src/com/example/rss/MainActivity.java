@@ -17,15 +17,23 @@ public class MainActivity extends Activity {
 	public ArrayList < Video > Array_Video = new ArrayList < Video > ();
 	private Video_adapter adapter;
 	private int startIndex = 1;
-	private String URL = "http://gdata.youtube.com/feeds/api/users/willyrex/uploads?max-results=50&start-index=" + String.valueOf(startIndex) + "&alt=rss";
+	private String URL = "";
 
 	@
 	Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		URL = generateUrl(startIndex);
+		
 		fillVideos();
 		//initListView();
+	}
+
+	public String generateUrl(int startPos) {
+		return "http://gdata.youtube.com/feeds/api/users/willyrex/uploads?max-results=50&start-index=" + String.valueOf(startPos) + "&alt=rss";
+		
 	}
 
 	private void initListView() {
@@ -81,6 +89,7 @@ public class MainActivity extends Activity {
 		protected Boolean doInBackground(final String...args) {
 			XMLParser parser = new XMLParser(feedUrl, getBaseContext());
 			Array_Video = parser.parse();
+			
 			return false;
 		}
 

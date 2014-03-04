@@ -57,10 +57,10 @@ public class XMLParser {
 							String name1 = property1.getNodeName();
 							if (name1.equalsIgnoreCase("media:thumbnail")) {
 								Element e = (Element) property1;
-								if(Integer.parseInt(e.getAttribute("height"))==360){
+								if (Integer.parseInt(e.getAttribute("height")) == 360) {
 									String thumbUrl = e.getAttribute("url");
 									Video.setImage(thumbUrl);
-								}								
+								}
 								//Log.i("MediaThumbnail", thumbUrl);																	
 							}
 							//Log.i("name1", name1);

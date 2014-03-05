@@ -29,7 +29,7 @@ public class XMLParser {
 	}
 
 	public ArrayList < Video > parse() {
-
+		
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		ArrayList < Video > Videos = new ArrayList < Video > ();
 		Video Video;

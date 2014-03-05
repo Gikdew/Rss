@@ -7,6 +7,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
 import android.content.Context;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -26,7 +27,7 @@ public class Video_adapter extends ArrayAdapter < Object > {
 		this.videos = videos;
 
 		rqstQueue = Volley.newRequestQueue(context);
-		imageloader = new ImageLoader(rqstQueue, new BitmapCache(10));
+		imageloader = new ImageLoader(rqstQueue, new BitmapCache(100));
 
 	}
 
@@ -54,10 +55,12 @@ public class Video_adapter extends ArrayAdapter < Object > {
 			convertView = View.inflate(context, R.layout.item_videos, null);
 			placeHolder = PlaceHolder.generate(convertView);
 			convertView.setTag(placeHolder);
-			imageloader.get(videos.get(position).getImage(), ImageLoader.getImageListener(placeHolder.imageView, R.drawable.ic_launcher, R.drawable.ic_launcher));
+			
 		} else {
 			placeHolder = (PlaceHolder) convertView.getTag();
+			imageloader.get(videos.get(position).getImage(), ImageLoader.getImageListener(placeHolder.imageView, R.drawable.ic_launcher, R.drawable.ic_launcher));
 		}
+		imageloader.get(videos.get(position).getImage(), ImageLoader.getImageListener(placeHolder.imageView, R.drawable.ic_launcher, R.drawable.ic_launcher));
 		placeHolder.title.setText(videos.get(position).getTitle());
 
 		return (convertView);

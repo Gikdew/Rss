@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" 
+    xmlns:com.example.rss="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_refresh"
+        android:orderInCategory="100"
+        com.example.rss:showAsAction="always"
+        android:icon="@drawable/ic_action_refresh"
+        android:title="Refresh"/>
+    <item
+        android:id="@+id/action_settings"
+        android:title="Settings"
+        com.example.rss:showAsAction="collapseActionView">
+    </item>
+
+</menu> 

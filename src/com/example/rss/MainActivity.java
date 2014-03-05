@@ -5,18 +5,28 @@ import java.util.ArrayList;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
-public class MainActivity extends Activity {
+public class MainActivity extends ActionBarActivity {
 
 	public ArrayList < Video > Array_Video = new ArrayList < Video > ();
 	public ArrayList < Video > Array_1 = new ArrayList < Video > ();
@@ -28,19 +38,23 @@ public class MainActivity extends Activity {
 	Button btnLoadMore;
 	ListView lv;
 	ProgressBar pgBar;
+	MenuItem refreshMenuItem;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
 		super.onCreate(savedInstanceState);
+		supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_main);
 
 		URL = generateUrl(startIndex, perPage);
 
 		lv = (ListView) findViewById(R.id.videos_listview);
+		
 		btnLoadMore = new Button(this);
 		btnLoadMore.setText("Load More");
+		btnLoadMore.setVisibility(View.GONE);
 		lv.addFooterView(btnLoadMore);
-
 		btnLoadMore.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -56,6 +70,7 @@ public class MainActivity extends Activity {
 
 		fillVideos();
 		initListView();
+		
 	}
 
 	public String generateUrl(int startPos, int pageNumber) {
@@ -131,12 +146,12 @@ public class MainActivity extends Activity {
 		@Override
 		protected void onPostExecute(Boolean success) {
 			adapter.notifyDataSetChanged();
-
-			//btnLoadMore.setVisibility(View.VISIBLE);
+			btnLoadMore.setVisibility(View.VISIBLE);
 
 			if(firstTimeAsync) {
 				dialog.cancel();
 				firstTimeAsync = false;
+				
 			} else {
 				lv.removeFooterView(pgBar);
 				lv.addFooterView(btnLoadMore);
@@ -144,4 +159,80 @@ public class MainActivity extends Activity {
 		}
 
 	}
+	
+
+	public class RefreshButtonAsync extends AsyncTask<String, Void, Boolean>{
+		private String feedUrl;
+		private Context ctx;
+		
+		public RefreshButtonAsync(Context c, String url) {
+			this.ctx = c;
+			this.feedUrl = url;			
+		}
+		
+		@Override
+		protected void onPreExecute() {
+				
+			//setSupportProgressBarIndeterminateVisibility(true);
+			
+			MenuItemCompat.setActionView(refreshMenuItem, R.layout.action_progress_bar);			 
+            MenuItemCompat.expandActionView(refreshMenuItem);	
+			
+		}
+		
+		@Override
+		protected Boolean doInBackground(String... params) {
+			lv.smoothScrollToPosition(0);		
+			XMLParser parser = new XMLParser(feedUrl, ctx);
+			Array_Video = parser.parse();
+			return false;
+		}
+		
+		
+		@Override
+		protected void onPostExecute(Boolean result) {
+			initListView();	
+			//setSupportProgressBarIndeterminateVisibility(false);
+			
+			MenuItemCompat.collapseActionView(refreshMenuItem);
+            MenuItemCompat.setActionView(refreshMenuItem, null);
+			
+			
+			
+		}
+
+	}
+
+	
+	//MENU
+	@Override
+	
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.main_menu, menu);
+	    return true;
+	}
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	    // action with ID action_refresh was selected
+	    case R.id.action_refresh:
+	    	if(isOnline()) {
+	    		refreshMenuItem = item;
+	    		new RefreshButtonAsync(MainActivity.this, generateUrl(1, perPage)).execute();
+			} else {
+				Log.i("isOnline", String.valueOf(isOnline()));
+			}
+	      break;
+	    // action with ID action_settings was selected
+	    case R.id.action_settings:
+	      Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
+	          .show();
+	      break;
+	    default:
+	      break;
+	    }
+
+	    return true;
+	  } 
 }

@@ -80,8 +80,7 @@ public class MainActivity extends ActionBarActivity {
 
 	private void initListView() {
 		adapter = new Video_adapter(this, Array_Video);
-		lv.setAdapter(adapter);
-		lv.invalidateViews();
+		lv.setAdapter(adapter);		
 
 	}
 
@@ -122,7 +121,7 @@ public class MainActivity extends ActionBarActivity {
 		protected void onPreExecute() {
 			if(firstTimeAsync) {
 				dialog.setCancelable(false);
-				dialog.setMessage("Loading");
+				dialog.setMessage("Loading...");
 				dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 				dialog.setProgress(1);
 				dialog.setMax(100);
@@ -191,7 +190,7 @@ public class MainActivity extends ActionBarActivity {
 		
 		@Override
 		protected void onPostExecute(Boolean result) {
-			initListView();	
+			initListView();
 			//setSupportProgressBarIndeterminateVisibility(false);
 			
 			MenuItemCompat.collapseActionView(refreshMenuItem);

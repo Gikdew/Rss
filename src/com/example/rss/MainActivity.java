@@ -22,6 +22,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.AbsListView.OnScrollListener;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -40,6 +42,7 @@ public class MainActivity extends ActionBarActivity {
 	ListView lv;
 	ProgressBar pgBar;
 	MenuItem refreshMenuItem;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +79,7 @@ public class MainActivity extends ActionBarActivity {
 	}
 
 	public String generateUrl(int startPos, int pageNumber) {
-		return "http://gdata.youtube.com/feeds/api/users/willyrex/uploads?max-results=" + String.valueOf(pageNumber) + "&start-index=" + String.valueOf(startPos) + "&alt=rss";
+		return "http://gdata.youtube.com/feeds/api/users/smosh/uploads?max-results=" + String.valueOf(pageNumber) + "&start-index=" + String.valueOf(startPos) + "&alt=rss";
 
 	}
 

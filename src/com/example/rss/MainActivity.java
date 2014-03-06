@@ -12,6 +12,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -53,6 +54,7 @@ public class MainActivity extends ActionBarActivity {
 		
 		btnLoadMore = new Button(this);
 		btnLoadMore.setText("Load More");
+		btnLoadMore.setTextColor(Color.WHITE);
 		btnLoadMore.setVisibility(View.GONE);
 		lv.addFooterView(btnLoadMore);
 		btnLoadMore.setOnClickListener(new View.OnClickListener() {

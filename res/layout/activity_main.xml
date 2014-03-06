@@ -2,7 +2,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" 
-    android:id="@+id/videos_linear">
+    android:id="@+id/videos_linear"
+    android:background="#000000">
 
     <ListView
         android:id="@+id/videos_listview"

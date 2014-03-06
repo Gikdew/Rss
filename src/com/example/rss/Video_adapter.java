@@ -63,7 +63,7 @@ public class Video_adapter extends ArrayAdapter < Object > {
 			
 		}
 		
-		imageloader.get(imageUrl, ImageLoader.getImageListener(placeHolder.imageView, R.drawable.ic_launcher, R.drawable.ic_launcher));
+		imageloader.get(imageUrl, ImageLoader.getImageListener(placeHolder.imageView, R.drawable.smosh, R.drawable.smosh));
 		placeHolder.title.setText(videos.get(position).getTitle());
 
 		return (convertView);

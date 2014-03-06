@@ -14,8 +14,7 @@
             android:id="@+id/video_imageView"
             android:layout_width="match_parent"
             android:layout_height="170dp" 
-            android:scaleType="centerCrop"           
-            android:src="@drawable/ic_launcher" />
+            android:scaleType="centerCrop"/>
 
         <TextView
             android:id="@+id/video_textview_title"

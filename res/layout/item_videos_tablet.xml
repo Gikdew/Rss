@@ -13,17 +13,18 @@
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/video_imageView"
             android:layout_width="match_parent"
-            android:layout_height="170sp" 
+            android:layout_height="350sp" 
             android:scaleType="centerCrop"/>
 
         <TextView
+            android:textSize="20sp"
             android:id="@+id/video_textview_title"
 			android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
-	        android:paddingLeft="10dp"
-	        android:paddingRight="10dp"
-	        android:paddingTop="10dp"
-	        android:paddingBottom="10dp"
+	        android:paddingLeft="25dp"
+	        android:paddingRight="25dp"
+	        android:paddingTop="25dp"
+	        android:paddingBottom="25dp"
 	        android:layout_gravity="bottom"            
             android:textColor="@android:color/white"
        		android:background="#DD000000"

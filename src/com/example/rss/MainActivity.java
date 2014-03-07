@@ -43,7 +43,6 @@ public class MainActivity extends ActionBarActivity {
 	ProgressBar pgBar;
 	MenuItem refreshMenuItem;
 	
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
@@ -67,13 +66,13 @@ public class MainActivity extends ActionBarActivity {
 				lv.removeFooterView(btnLoadMore);
 				startIndex += perPage;
 				if(isOnline()){
-					new DownloadVideos(MainActivity.this, generateUrl(startIndex, perPage)).execute();
+					new DownloadVideos(MainActivity.this, generateUrl(startIndex, perPage)).execute();					
 				}
 				
 			}
 		});
 
-		fillVideos();
+		fillVideos();		
 		initListView();
 		
 	}
@@ -143,7 +142,7 @@ public class MainActivity extends ActionBarActivity {
 		protected Boolean doInBackground(final String...args) {
 			XMLParser parser = new XMLParser(feedUrl, getBaseContext());
 			Array_1 = parser.parse();
-			Array_Video.addAll(Array_1);
+			Array_Video.addAll(Array_1);			
 			return false;
 		}
 
@@ -151,7 +150,6 @@ public class MainActivity extends ActionBarActivity {
 		protected void onPostExecute(Boolean success) {
 			adapter.notifyDataSetChanged();
 			btnLoadMore.setVisibility(View.VISIBLE);
-
 			if(firstTimeAsync) {
 				dialog.cancel();
 				firstTimeAsync = false;
@@ -190,8 +188,7 @@ public class MainActivity extends ActionBarActivity {
 			XMLParser parser = new XMLParser(feedUrl, ctx);
 			Array_Video = parser.parse();
 			return false;
-		}
-		
+		}	
 		
 		@Override
 		protected void onPostExecute(Boolean result) {

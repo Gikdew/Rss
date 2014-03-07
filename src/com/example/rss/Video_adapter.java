@@ -21,16 +21,14 @@ public class Video_adapter extends ArrayAdapter < Object > {
 	Context context;
 	private ArrayList < Video > videos;
 	RequestQueue rqstQueue;
-	static ImageLoader imageloader;
-	ImageContainer[] imagecontainer;
+	static ImageLoader imageloader;	
 
 	public Video_adapter(Context context, ArrayList < Video > videos) {
 		super(context, R.layout.item_videos);
 		this.context = context;
 		this.videos = videos;
 		rqstQueue = Volley.newRequestQueue(context);
-		imageloader = new ImageLoader(rqstQueue, new BitmapCache(100));
-				
+		imageloader = new ImageLoader(rqstQueue, new BitmapCache(100));				
 	}
 
 	@
@@ -40,35 +38,36 @@ public class Video_adapter extends ArrayAdapter < Object > {
 	}
 
 	private static class PlaceHolder {
-		TextView title;
+		TextView title, duration;
 		NetworkImageView imageView;
+		
 		public static PlaceHolder generate(View convertView) {
 			PlaceHolder placeHolder = new PlaceHolder();
 			placeHolder.title = (TextView) convertView.findViewById(R.id.video_textview_title);
 			placeHolder.imageView = (NetworkImageView) convertView.findViewById(R.id.video_imageView);
-			
+			placeHolder.duration = (TextView) convertView.findViewById(R.id.video_textview_duration);			
 			return placeHolder;
 		}
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
 		PlaceHolder placeHolder;
-		String imageUrl = videos.get(position).getImage();
+		String imageUrl = videos.get(position).getImageUrl();
 		
 		if (convertView == null) {
 			convertView = View.inflate(context, isTablet(context) ? R.layout.item_videos_tablet :R.layout.item_videos, null);
 			placeHolder = PlaceHolder.generate(convertView);
-			convertView.setTag(placeHolder);
-			
+			convertView.setTag(placeHolder);			
 		} else {
 			placeHolder = (PlaceHolder) convertView.getTag();
 			
 		}
 		
+		 placeHolder.duration.setText(videos.get(position).getDuration());
 		 placeHolder.imageView.setDefaultImageResId(R.drawable.smosh);
-         placeHolder.imageView.setImageUrl(videos.get(position).getImage(), imageloader);
-		//imageloader.get(imageUrl, ImageLoader.getImageListener(placeHolder.imageView, R.drawable.smosh, R.drawable.smosh));
-		placeHolder.title.setText(videos.get(position).getTitle());
+         placeHolder.imageView.setImageUrl(imageUrl, imageloader);
+		 //imageloader.get(imageUrl, ImageLoader.getImageListener(placeHolder.imageView, R.drawable.smosh, R.drawable.smosh));
+		 placeHolder.title.setText(videos.get(position).getTitle());
 
 		return (convertView);
 

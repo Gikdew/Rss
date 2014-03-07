@@ -2,7 +2,10 @@ package com.example.rss;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -28,11 +31,13 @@ public class XMLParser {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	public ArrayList < Video > parse() {
 		
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		ArrayList < Video > Videos = new ArrayList < Video > ();
 		Video Video;
+		DateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss Z", Locale.ENGLISH);
 
 		try {
 			DocumentBuilder builder = factory.newDocumentBuilder();
@@ -59,22 +64,25 @@ public class XMLParser {
 								Element e = (Element) property1;
 								if (Integer.parseInt(e.getAttribute("height")) == 360) {
 									String thumbUrl = e.getAttribute("url");
-									Video.setImage(thumbUrl);
+									Video.setImageUrl(thumbUrl);
 								}
 								//Log.i("MediaThumbnail", thumbUrl);																	
+							}else if(name1.equalsIgnoreCase("media:content")){
+								Element e = (Element) property1;
+								int duration = Integer.parseInt(e.getAttribute("duration"));
+								Video.setDuration(duration);
 							}
-							//Log.i("name1", name1);
+							
 						}
 					} else if (name.equalsIgnoreCase("description")) {
-
 					} else if (name.equalsIgnoreCase("link")) {
 						Video.setLink(property.getFirstChild().getNodeValue());
 					} else if (name.equalsIgnoreCase("pubDate")) {
-
+						Video.setDate(formatter.parse(""+property.getFirstChild().getNodeValue()));				
 					}
 				}
 				Videos.add(Video);
-				Log.i("Parsher", "Video Image: " + Video.getImage());
+				Log.i("Parsher", "Video Image: " + Video.getDuration());
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);

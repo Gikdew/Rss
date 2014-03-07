@@ -1,35 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" 
->
+    android:background="#000000">
 
-    <FrameLayout
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/video_imageView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#000000">
-
-        <com.android.volley.toolbox.NetworkImageView
-            android:id="@+id/video_imageView"
-            android:layout_width="match_parent"
-            android:layout_height="170sp" 
-            android:scaleType="centerCrop"/>
-
+        android:layout_height="180sp" 
+        android:scaleType="centerCrop"
+        android:src="@drawable/smosh"/>
+    
+    <LinearLayout 
+    	android:layout_width="match_parent"
+   		android:layout_height="wrap_content"
+   		android:layout_gravity="bottom"
+   		android:orientation="vertical">
         <TextView
-            android:id="@+id/video_textview_title"
-			android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:paddingLeft="10dp"
-	        android:paddingRight="10dp"
-	        android:paddingTop="10dp"
-	        android:paddingBottom="10dp"
-	        android:layout_gravity="bottom"            
-            android:textColor="@android:color/white"
-       		android:background="#DD000000"
-            android:ellipsize="end"
-            android:singleLine="false"
-            android:text="@string/app_name" />
-       
-    </FrameLayout>
-</LinearLayout>
+             android:layout_gravity="right"         
+             android:padding="5sp"
+             android:layout_margin="1sp"
+	         android:id="@+id/video_textview_duration"
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content"
+	         android:focusableInTouchMode="false"
+	         android:gravity="right"
+	         android:text="@string/app_name" 
+	         android:textColor="#FFFFFF"
+	         android:background="#DD000000"/>
+
+    	<TextView
+	         android:id="@+id/video_textview_title"
+		     android:layout_width="match_parent"
+		     android:layout_height="wrap_content"
+		     android:paddingLeft="10dp"
+		     android:paddingRight="10dp"
+		     android:paddingTop="10dp"
+		     android:paddingBottom="10dp"
+		     android:layout_gravity="bottom"            
+	         android:textColor="@android:color/white"
+	    	 android:background="#DD000000"
+	         android:ellipsize="end"
+	         android:text="@string/app_name" />    
+    </LinearLayout>          
+</FrameLayout>

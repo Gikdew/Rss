@@ -30,15 +30,13 @@ public class Video {
 		this.image = image;
 	}
 	public void setDuration(int duration){
-		//FORMATEO DE LA DURACION
 		
+		//FORMATEO DE LA DURACION		
 		String seconds1;
 		int minutes = (duration % 3600) / 60;
-		int seconds = duration % 60;		
-		
+		int seconds = duration % 60;				
 		if(seconds < 10) seconds1 = "0" + seconds;
-		else seconds1 = "" + seconds;
-		
+		else seconds1 = "" + seconds;		
 		this.duration = minutes + ":" + seconds1;
 	}
 	

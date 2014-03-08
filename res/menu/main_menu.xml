@@ -12,5 +12,11 @@
         android:title="Settings"
         com.example.rss:showAsAction="collapseActionView">
     </item>
+    
+    <item
+        android:id="@+id/action_contact"
+        android:title="Contact"
+        com.example.rss:showAsAction="collapseActionView">
+    </item>
 
 </menu> 

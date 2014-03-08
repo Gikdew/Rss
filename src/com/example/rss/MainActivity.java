@@ -12,6 +12,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
@@ -42,10 +43,11 @@ public class MainActivity extends ActionBarActivity {
 	ListView lv;
 	ProgressBar pgBar;
 	MenuItem refreshMenuItem;
-	
-	@Override
+
+	@
+	Override
 	protected void onCreate(Bundle savedInstanceState) {
-		
+
 		super.onCreate(savedInstanceState);
 		supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_main);
@@ -60,21 +62,24 @@ public class MainActivity extends ActionBarActivity {
 		btnLoadMore.setVisibility(View.GONE);
 		lv.addFooterView(btnLoadMore);
 		btnLoadMore.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
+
+			@
+			Override
 			public void onClick(View arg0) {
 				lv.removeFooterView(btnLoadMore);
 				startIndex += perPage;
-				if(isOnline()){
-					new DownloadVideos(MainActivity.this, generateUrl(startIndex, perPage)).execute();					
+				if(isOnline()) {
+					new DownloadVideos(MainActivity.this, generateUrl(startIndex, perPage)).execute();
+				}else{
+					Toast.makeText(MainActivity.this, "Internet Connection Problem. Retry.", Toast.LENGTH_SHORT).show();
 				}
-				
+
 			}
 		});
 
-		fillVideos();		
+		fillVideos();
 		initListView();
-		
+
 	}
 
 	public String generateUrl(int startPos, int pageNumber) {
@@ -84,8 +89,10 @@ public class MainActivity extends ActionBarActivity {
 
 	private void initListView() {
 		adapter = new Video_adapter(this, Array_Video);
-		lv.setAdapter(adapter);		
-
+		lv.setAdapter(adapter);
+		btnLoadMore.setVisibility(View.VISIBLE);
+		
+		
 	}
 
 	private void fillVideos() {
@@ -94,6 +101,7 @@ public class MainActivity extends ActionBarActivity {
 			new DownloadVideos(MainActivity.this, generateUrl(startIndex, perPage)).execute();
 		} else {
 			Log.i("isOnline", String.valueOf(isOnline()));
+			Toast.makeText(MainActivity.this, "Internet Connection Problem. Retry.", Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -108,7 +116,6 @@ public class MainActivity extends ActionBarActivity {
 	}
 
 	public class DownloadVideos extends AsyncTask < String, Void, Boolean > {
-
 		private String feedUrl;
 		private Context ctx;
 		ProgressDialog dialog;
@@ -121,7 +128,8 @@ public class MainActivity extends ActionBarActivity {
 			dialog = new ProgressDialog(c);
 		}
 
-		@Override
+		@
+		Override
 		protected void onPreExecute() {
 			if(firstTimeAsync) {
 				dialog.setCancelable(false);
@@ -138,22 +146,48 @@ public class MainActivity extends ActionBarActivity {
 			}
 		}
 
-		@Override
+		@
+		Override
 		protected Boolean doInBackground(final String...args) {
-			XMLParser parser = new XMLParser(feedUrl, getBaseContext());
-			Array_1 = parser.parse();
-			Array_Video.addAll(Array_1);			
+			try {
+				XMLParser parser = new XMLParser(feedUrl, getBaseContext());
+				Array_1 = parser.parse();
+			} catch (Exception e) {
+				cancel(true);
+			}
+			
+			Array_Video.addAll(Array_1);
 			return false;
 		}
 
-		@Override
+		@
+		Override
 		protected void onPostExecute(Boolean success) {
 			adapter.notifyDataSetChanged();
-			btnLoadMore.setVisibility(View.VISIBLE);
+			if(Array_1.size() == 0) {
+				btnLoadMore.setVisibility(View.GONE);
+				Toast.makeText(ctx, "No more videos to show", Toast.LENGTH_SHORT).show();
+			} else {
+				btnLoadMore.setVisibility(View.VISIBLE);
+			}
+
 			if(firstTimeAsync) {
 				dialog.cancel();
 				firstTimeAsync = false;
-				
+
+			} else {
+				lv.removeFooterView(pgBar);
+				lv.addFooterView(btnLoadMore);
+			}
+		}
+		@Override
+		protected void onCancelled() {
+			super.onCancelled();
+			Toast.makeText(ctx, "Internet Connection Problem. Retry.",  Toast.LENGTH_SHORT).show();
+			if(firstTimeAsync) {
+				dialog.dismiss();
+				firstTimeAsync = false;
+
 			} else {
 				lv.removeFooterView(pgBar);
 				lv.addFooterView(btnLoadMore);
@@ -161,79 +195,83 @@ public class MainActivity extends ActionBarActivity {
 		}
 
 	}
-	
 
-	public class RefreshButtonAsync extends AsyncTask<String, Void, Boolean>{
+	public class RefreshButtonAsync extends AsyncTask < String, Void, Boolean > {
 		private String feedUrl;
 		private Context ctx;
-		
+
 		public RefreshButtonAsync(Context c, String url) {
 			this.ctx = c;
-			this.feedUrl = url;			
+			this.feedUrl = url;
 		}
-		
-		@Override
+
+		@
+		Override
 		protected void onPreExecute() {
-				
+
 			//setSupportProgressBarIndeterminateVisibility(true);
-			
-			MenuItemCompat.setActionView(refreshMenuItem, R.layout.action_progress_bar);			 
-            MenuItemCompat.expandActionView(refreshMenuItem);	
-			
+
+			MenuItemCompat.setActionView(refreshMenuItem, R.layout.action_progress_bar);
+			MenuItemCompat.expandActionView(refreshMenuItem);
+
 		}
-		
-		@Override
-		protected Boolean doInBackground(String... params) {
-			lv.smoothScrollToPosition(0);		
+
+		@
+		Override
+		protected Boolean doInBackground(String...params) {
+			lv.smoothScrollToPosition(0);
 			XMLParser parser = new XMLParser(feedUrl, ctx);
 			Array_Video = parser.parse();
 			return false;
-		}	
-		
-		@Override
+		}
+
+		@
+		Override
 		protected void onPostExecute(Boolean result) {
 			initListView();
 			//setSupportProgressBarIndeterminateVisibility(false);
-			
+
 			MenuItemCompat.collapseActionView(refreshMenuItem);
-            MenuItemCompat.setActionView(refreshMenuItem, null);
-			
-			
-			
+			MenuItemCompat.setActionView(refreshMenuItem, null);
+
 		}
 
 	}
 
-	
 	//MENU
-	@Override
-	
+	@
+	Override
+
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.main_menu, menu);
-	    return true;
+		inflater.inflate(R.menu.main_menu, menu);
+		return true;
 	}
-	
+
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    switch (item.getItemId()) {
-	    // action with ID action_refresh was selected
-	    case R.id.action_refresh:
-	    	if(isOnline()) {
-	    		refreshMenuItem = item;
-	    		new RefreshButtonAsync(MainActivity.this, generateUrl(1, perPage)).execute();
+		switch(item.getItemId()) {
+			// action with ID action_refresh was selected
+		case R.id.action_refresh:
+			if(isOnline()) {
+				refreshMenuItem = item;
+				new RefreshButtonAsync(MainActivity.this, generateUrl(1, perPage)).execute();
 			} else {
 				Log.i("isOnline", String.valueOf(isOnline()));
+				Toast.makeText(MainActivity.this, "Internet Connection Problem. Retry.", Toast.LENGTH_SHORT).show();
 			}
-	      break;
-	    // action with ID action_settings was selected
-	    case R.id.action_settings:
-	      Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
-	          .show();
-	      break;
-	    default:
-	      break;
-	    }
+			break;
+			// action with ID action_settings was selected
+		case R.id.action_settings:
+			Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
+				.show();
+			break;			
+		case R.id.action_contact:
+			Intent intent = new Intent(this, Contacto.class);		    
+		    startActivity(intent);
+		default:
+			break;
+		}
 
-	    return true;
-	  } 
+		return true;
+	}
 }

@@ -2,6 +2,7 @@ package com.example.rss;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,7 +42,10 @@ public class XMLParser {
 
 		try {
 			DocumentBuilder builder = factory.newDocumentBuilder();
-			Document dom = builder.parse(this.url.openConnection().getInputStream());
+			URLConnection urlConn = this.url.openConnection();
+			urlConn.setConnectTimeout(1000);
+			urlConn.setReadTimeout(1000);
+			Document dom = builder.parse(urlConn.getInputStream());
 			Element root = dom.getDocumentElement();
 			NodeList items = root.getElementsByTagName("item");
 			for (int i = 0; i < items.getLength(); i++) {

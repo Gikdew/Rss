@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -24,8 +25,9 @@ public class Contacto extends ActionBarActivity {
 	
 	
 	 protected void onCreate(Bundle savedInstanceState) {
-	        super.onCreate(savedInstanceState);
-	        requestWindowFeature(Window.FEATURE_NO_TITLE);
+	     super.onCreate(savedInstanceState);
+	     ActionBar actionBar = getSupportActionBar();
+	     actionBar.setDisplayHomeAsUpEnabled(true);
 	        
 	        setContentView(R.layout.contacto);
 	

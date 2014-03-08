@@ -24,9 +24,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
          <activity
             android:name="com.example.rss.Contacto"
-            android:label="Contact" >            
+            android:label="Contact" >
+            android:parentActivityName="com.example.myfirstapp.MainActivity" >
+	        <meta-data
+	            android:name="android.support.PARENT_ACTIVITY"
+	            android:value="com.example.rss.MainActivity" />            
         </activity>
     </application>
 

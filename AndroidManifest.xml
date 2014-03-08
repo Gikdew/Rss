@@ -22,16 +22,28 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>           
+            
         </activity>
         
          <activity
             android:name="com.example.rss.Contacto"
-            android:label="Contact" >
+            android:label="Contact" 
             android:parentActivityName="com.example.myfirstapp.MainActivity" >
 	        <meta-data
 	            android:name="android.support.PARENT_ACTIVITY"
 	            android:value="com.example.rss.MainActivity" />            
+        </activity>
+        
+         <activity
+            android:name="com.example.rss.VideoActivity"
+            android:label="Video" 
+            android:parentActivityName="com.example.myfirstapp.MainActivity"
+            android:screenOrientation="landscape">
+	        <meta-data
+	            android:name="android.support.PARENT_ACTIVITY"
+	            android:value="com.example.rss.MainActivity" /> 
+	            
         </activity>
     </application>
 

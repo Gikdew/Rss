@@ -84,14 +84,14 @@ public class Contacto extends ActionBarActivity {
        params = new RelativeLayout.LayoutParams((int)(w * 0.15), (int)(h * 0.09));
        params.leftMargin = (int)(0);
        params.topMargin = (int)(h*0.38);
-       foto_twitter.setBackgroundResource(R.drawable.ic_launcher);
+       foto_twitter.setBackgroundResource(R.drawable.twitter);
        rl.addView(foto_twitter, params);
        
   	   ImageButton foto_email = new ImageButton(this);
        params = new RelativeLayout.LayoutParams((int)(w * 0.15), (int)(h * 0.09));
        params.leftMargin = (int)(0);
        params.topMargin = (int)(h*0.56);
-       foto_email.setBackgroundResource(R.drawable.ic_launcher);
+       foto_email.setBackgroundResource(R.drawable.email);
        rl.addView(foto_email, params);
        
        
@@ -99,14 +99,14 @@ public class Contacto extends ActionBarActivity {
        params = new RelativeLayout.LayoutParams((int)(w * 0.15), (int)(h * 0.09));
        params.leftMargin = (int)(0);
        params.topMargin = (int)(h*0.74);
-       foto_facebook.setBackgroundResource(R.drawable.ic_launcher);
+       foto_facebook.setBackgroundResource(R.drawable.facebook);
        rl.addView(foto_facebook, params);
        
  	   ImageButton foto_mas = new ImageButton(this);
        params = new RelativeLayout.LayoutParams((int)(w * 0.15), (int)(h * 0.15));
        params.leftMargin = (int)(w*0.425);
        params.topMargin = (int)(h*0.85);
-       foto_mas.setBackgroundResource(R.drawable.ic_launcher);
+       foto_mas.setBackgroundResource(R.drawable.mas);
        rl.addView(foto_mas, params);
          
          

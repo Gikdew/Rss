@@ -18,7 +18,17 @@ public class Video {
 		this.title = title;		
 	}	
 	public void setLink(String link){
-		this.link = link;
+		String link1 = "http://youtube.com/v?=879698769876&gdata";
+		if(link.indexOf('=')!=-1){
+			String urlpart = link.substring(link.indexOf('='));
+			if(urlpart.indexOf("&")!=-1){
+				int enddelimiterImage = urlpart.indexOf("&");						
+				link1 = link.substring(link.indexOf('=')+1,link.indexOf('=')+enddelimiterImage);
+			}else{
+				link1=link.substring(link.indexOf('=')+1);
+			}			
+		}
+		this.link = link1;
 	}
 	public void setImageUrl(String image){
 		this.imageUrl = image;

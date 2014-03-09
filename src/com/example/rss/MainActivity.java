@@ -2,6 +2,7 @@ package com.example.rss;
 
 import java.util.ArrayList;
 
+import android.R.string;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -36,14 +37,17 @@ public class MainActivity extends ActionBarActivity {
 	public ArrayList < Video > Array_Video = new ArrayList < Video > ();
 	public ArrayList < Video > Array_1 = new ArrayList < Video > ();
 	private Video_adapter adapter;
+	private String URL; 
 	private int startIndex = 1;
-	private String URL;
+	String youtubeUser="smosh";	
 	int perPage = 10;
 	Boolean firstTimeAsync = true;
 	Button btnLoadMore;
 	ListView lv;
 	ProgressBar pgBar;
 	MenuItem refreshMenuItem;
+	
+	Boolean flag_loading;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,45 +60,36 @@ public class MainActivity extends ActionBarActivity {
 
 		lv = (ListView) findViewById(R.id.videos_listview);
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-			  @Override
-			  public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-				  
-				  	Intent intent = new Intent(MainActivity.this, VideoActivity.class);
-				    String video = Array_Video.get(position).getLink();
-				    intent.putExtra("videoURL", video);
-				    Toast.makeText(MainActivity.this, video, Toast.LENGTH_SHORT).show();
-				    startActivity(intent);
-			   
-			  }
-			});
-		/*
-		lv.setOnScrollListener(new OnScrollListener() {
-
-			private int currentScrollState;
-			private int currentFirstVisibleItem;
-			private int currentVisibleItemCount;
-			@Override
-			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				this.currentScrollState = scrollState;
-			    this.isScrollCompleted();
-				
-			}
-			
-			@Override
-			public void onScroll(AbsListView view, int firstVisibleItem,
-					int visibleItemCount, int totalItemCount) {
-				this.currentFirstVisibleItem = firstVisibleItem;
-			    currentVisibleItemCount = visibleItemCount;
-				
-			}
-			private void isScrollCompleted() {
-			    if (this.currentVisibleItemCount > 0 && this.currentScrollState == SCROLL_STATE_IDLE) {
-			       btnLoadMore.performClick();
-			    }
-			}
+		  @Override
+		  public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+			  
+			  	Intent intent = new Intent(MainActivity.this, VideoActivity.class);
+			    String video = Array_Video.get(position).getLink();
+			    intent.putExtra("videoURL", video);
+			    Toast.makeText(MainActivity.this, video, Toast.LENGTH_SHORT).show();
+			    startActivity(intent);
+		   
+		  }
 		});
-		*/
+		
+		flag_loading = false;
+		lv.setOnScrollListener(new OnScrollListener() {
+	        public void onScrollStateChanged(AbsListView view, int scrollState) {
+	        	
+	        }
+	        public void onScroll(AbsListView view, int firstVisibleItem,
+	                int visibleItemCount, int totalItemCount) {
+	            if(firstVisibleItem+visibleItemCount == totalItemCount - 4 && totalItemCount!=0)
+	            {
+	                if(flag_loading == false)
+	                {
+	                    flag_loading = true;
+	                    btnLoadMore.performClick();
+	                }
+	            }
+	        }
+	    });
+		
 		btnLoadMore = new Button(this);
 		btnLoadMore.setText("Load More");
 		btnLoadMore.setTextColor(Color.WHITE);
@@ -121,8 +116,10 @@ public class MainActivity extends ActionBarActivity {
 	}
 
 	public String generateUrl(int startPos, int pageNumber) {
-		return "http://gdata.youtube.com/feeds/api/users/smosh/uploads?max-results=" + String.valueOf(pageNumber) + "&start-index=" + String.valueOf(startPos) + "&alt=rss";
-
+		return "http://gdata.youtube.com/feeds/api/users/"+ youtubeUser + 
+				"/uploads?max-results=" + String.valueOf(pageNumber) + 
+				"&start-index=" + String.valueOf(startPos) + 
+				"&alt=rss";
 	}
 
 	private void initListView() {
@@ -168,6 +165,7 @@ public class MainActivity extends ActionBarActivity {
 
 		@Override
 		protected void onPreExecute() {
+			flag_loading = true;
 			if(firstTimeAsync) {
 				dialog.setCancelable(false);
 				dialog.setMessage("Loading...");
@@ -198,25 +196,30 @@ public class MainActivity extends ActionBarActivity {
 		}
 
 		@Override
-		protected void onPostExecute(Boolean success) {			
-			 if (success) {
-				 	adapter.notifyDataSetChanged();
-					btnLoadMore.setVisibility(View.VISIBLE);
-					if(firstTimeAsync) {
-						dialog.cancel();
-						firstTimeAsync = false;
-						
-					} else {
-						lv.removeFooterView(pgBar);
-						lv.addFooterView(btnLoadMore);
-					}   
-		         } else {
-		            if (error != null) {
-		                Toast.makeText(ctx, error.getMessage(),
-		                        Toast.LENGTH_SHORT).show();
-		            }
-		        }
-			 
+		protected void onPostExecute(Boolean success) {		
+			flag_loading = false;
+			if (success) {
+			 	adapter.notifyDataSetChanged();
+				btnLoadMore.setVisibility(View.VISIBLE);						
+				if(firstTimeAsync) {
+					dialog.cancel();
+					firstTimeAsync = false;					
+				} else {
+					lv.removeFooterView(pgBar);
+					lv.addFooterView(btnLoadMore);
+					if(Array_1.size() == 0){
+						lv.removeFooterView(btnLoadMore);
+						flag_loading = true;
+					}		
+				}   
+	         } else {
+	            if (error != null) {
+	                Toast.makeText(ctx, error.getMessage(),
+	                        Toast.LENGTH_SHORT).show();
+	            }
+	        
+
+			}		 
 			
 		}
 
@@ -235,8 +238,7 @@ public class MainActivity extends ActionBarActivity {
 		@Override
 		protected void onPreExecute() {
 			lv.removeFooterView(btnLoadMore);
-			//setSupportProgressBarIndeterminateVisibility(true);
-			
+			//setSupportProgressBarIndeterminateVisibility(true);			
 			MenuItemCompat.setActionView(refreshMenuItem, R.layout.action_progress_bar);			 
             MenuItemCompat.expandActionView(refreshMenuItem);	
 			
@@ -244,7 +246,7 @@ public class MainActivity extends ActionBarActivity {
 		
 		@Override
 		protected Boolean doInBackground(String... params) {
-			lv.smoothScrollToPosition(0);		
+			lv.smoothScrollToPosition(0);					
 			XMLParser parser = new XMLParser(feedUrl, ctx);
 			Array_Video = parser.parse();
 			return false;
@@ -252,15 +254,14 @@ public class MainActivity extends ActionBarActivity {
 		
 		@Override
 		protected void onPostExecute(Boolean result) {
-			initListView();
-			
+			initListView();		
+			lv.setSelection(0);
 			btnLoadMore.setVisibility(View.VISIBLE);
 			lv.addFooterView(btnLoadMore);
 			//setSupportProgressBarIndeterminateVisibility(false);
 			MenuItemCompat.collapseActionView(refreshMenuItem);
             MenuItemCompat.setActionView(refreshMenuItem, null);
-          
-		}
+        }
 
 	}
 

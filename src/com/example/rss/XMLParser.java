@@ -90,7 +90,7 @@ public class XMLParser {
 					}
 				}
 				Videos.add(Video);
-				Log.i("Parsher", "Video Image: " + Video.getLink());
+				//Log.i("Parsher", "Video Image: " + Video.getLink());
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);

@@ -55,6 +55,9 @@ public class MainActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_main);
+		
+		Intent i= new Intent(MainActivity.this, DownloadService.class);
+		MainActivity.this.startService(i);
 
 		URL = generateUrl(startIndex, perPage);
 

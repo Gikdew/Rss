@@ -298,6 +298,8 @@ public class MainActivity extends ActionBarActivity {
 		case R.id.action_settings:
 			Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
 				.show();
+			Intent intent2 = new Intent(this, Preferencias.class);		    
+		    startActivity(intent2);
 			break;			
 		case R.id.action_contact:
 			Intent intent = new Intent(this, Contacto.class);		    

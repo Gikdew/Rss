@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <SwitchPreference
+    android:key="notificaciones"
+    android:title="Notificaciones" 
+    android:summary="Activa las notificaciones cuando hay video nuevo"/>
+    
+    <SwitchPreference
+    android:key="actualizacion"
+    android:title="Actualizacion automatica" 
+    android:summary="Actualiza los videos al llegar al final de la pagina"/>
+    
+
+</PreferenceScreen>

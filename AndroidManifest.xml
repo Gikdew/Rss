@@ -31,7 +31,7 @@ s
         <activity
             android:name="com.example.rss.MainActivity"
             android:label="@string/app_name" 
-            android:configChanges="orientation|screenSize">
+            android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -59,6 +59,13 @@ s
 	            android:value="com.example.rss.MainActivity" /> 
 	            
         </activity>
+        
+                         <activity
+               android:name="Preferencias" 
+               >
+	        
+                    </activity>
+   
     </application>
 
 </manifest>

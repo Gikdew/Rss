@@ -11,7 +11,7 @@ public class ConfigClass {
 	String DEVELOPER_KEY = "AIzaSyDsbCn-hOTV6yTpSKW_syy78D2rS39yXt8";
 	
 	Boolean admobEnabled = false;
-	Boolean appnextEnabled = false;
+	Boolean appnextEnabled = true;
 	String ADMOB_KEY = "";
 	String APPNEXT_KEY = "1f619df5-5c55-43ba-932c-9cc601b252c2";	
 	int adsEveryXClicks = 3;

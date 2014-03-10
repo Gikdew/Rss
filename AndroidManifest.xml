@@ -58,8 +58,7 @@ s
          <activity
             android:name=".VideoActivity"
             android:label="Video" 
-            android:parentActivityName=".MainActivity"
-            android:screenOrientation="landscape">
+            android:parentActivityName=".MainActivity">
 	        <meta-data
 	            android:name="android.support.PARENT_ACTIVITY"
 	            android:value="com.example.rss.MainActivity" /> 

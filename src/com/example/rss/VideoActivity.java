@@ -11,9 +11,12 @@ import com.google.android.youtube.player.YouTubePlayerView;
 
 public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener{
 	
-	static private final String DEVELOPER_KEY = "AIzaSyDsbCn-hOTV6yTpSKW_syy78D2rS39yXt8";
+	
     static private String VIDEO = "";
     YouTubePlayerView youTubeView;
+    
+	ConfigClass c = new ConfigClass();
+	String DEVELOPER_KEY = c.DEVELOPER_KEY;
     
 	@Override
 	protected void onCreate(Bundle arg0) {

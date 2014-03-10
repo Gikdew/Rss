@@ -28,7 +28,7 @@ public class Video_adapter extends ArrayAdapter < Object > {
 		this.context = context;
 		this.videos = videos;
 		rqstQueue = Volley.newRequestQueue(context);
-		imageloader = new ImageLoader(rqstQueue, new BitmapCache(300));				
+		imageloader = new ImageLoader(rqstQueue, new BitmapCache(75));				
 	}
 
 	@

@@ -22,10 +22,13 @@ import android.widget.Toast;
 
 public class DownloadService extends Service {
 	
-	String youtubeUser="Smosh";		 
 	public ArrayList < Video > Array_Video = new ArrayList < Video > ();
     private static final String DEBUG_TAG = "TutListDownloaderService";
     Exception error;
+    
+	ConfigClass c = new ConfigClass();
+	String youtubeUser = c.youtubeUser;
+	
     
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -76,7 +79,7 @@ public class DownloadService extends Service {
         protected void onPostExecute(Boolean result) {
         	if (result) {
         		Video video = Array_Video.get(0);
-            	
+        		            	
             	if((video.getDate().getDay() != lastVideo.getInt("day", 0)) || 
             			(video.getDate().getHours() != lastVideo.getInt("hour", 0)) ||
             			(video.getDate().getMinutes() != lastVideo.getInt("minute", 0))){
@@ -89,7 +92,13 @@ public class DownloadService extends Service {
             		editor.putInt("hour", video.getDate().getHours());
             		editor.commit();
             		
-            		sendNotification();        		
+            		if(!lastVideo.contains("firstTime")){
+            			editor.putBoolean("firstTime", false);
+            			editor.commit();
+            		}else{
+            			sendNotification();
+            		}         		
+            		      		
             		
             	} 	
             	
@@ -108,21 +117,23 @@ public class DownloadService extends Service {
 
 		public void sendNotification() {
 			Intent intent = new Intent(DownloadService.this, MainActivity.class);
-			PendingIntent pIntent = PendingIntent.getActivity(DownloadService.this, 0, intent, 0);
+			intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			PendingIntent pIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
 
 			// build notification
 			// the addAction re-use the same intent to keep the example short
 			NotificationCompat.Builder mBuilder =  new NotificationCompat.Builder(DownloadService.this); 
 					 
-			mBuilder.setContentTitle("New Video!"); 
-			mBuilder.setContentText(youtubeUser + " has uploaded a new video!"); 
-			mBuilder.setTicker(youtubeUser + " has uploaded a new video!"); 
-			mBuilder.setSmallIcon(R.drawable.ic_launcher); 
-			mBuilder.setContentIntent(pIntent);			    
+			mBuilder.setContentTitle("New Video!")
+					.setContentText(youtubeUser + " has uploaded a new video!")
+					.setTicker(youtubeUser + " has uploaded a new video!")
+					.setSmallIcon(R.drawable.ic_launcher)
+					.setContentIntent(pIntent)
+					.setAutoCancel(true)
+					.setDefaults(Notification.DEFAULT_ALL);
 			  
-			NotificationManager notificationManager = 
-			  (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
+			NotificationManager notificationManager =  (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+			
 			notificationManager.notify(0, mBuilder.build()); 
 			
 		}

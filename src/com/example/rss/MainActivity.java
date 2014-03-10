@@ -38,17 +38,19 @@ public class MainActivity extends ActionBarActivity {
 	public ArrayList < Video > Array_1 = new ArrayList < Video > ();
 	private Video_adapter adapter;
 	private String URL; 
-	private int startIndex = 1;
-	String youtubeUser="smosh";	
-	int perPage = 10;
+	
 	Boolean firstTimeAsync = true;
 	Button btnLoadMore;
 	ListView lv;
 	ProgressBar pgBar;
-	MenuItem refreshMenuItem;
-	
+	MenuItem refreshMenuItem, settingsMenuItem;	
 	Boolean flag_loading;
 
+	ConfigClass c = new ConfigClass();
+	String youtubeUser = c.youtubeUser;
+	int perPage = c.perPage;
+	int startIndex = c.startIndex;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
@@ -60,16 +62,17 @@ public class MainActivity extends ActionBarActivity {
 		MainActivity.this.startService(i);
 
 		URL = generateUrl(startIndex, perPage);
+		
+		
 
 		lv = (ListView) findViewById(R.id.videos_listview);
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 		  @Override
-		  public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-			  
+		  public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {			  
 			  	Intent intent = new Intent(MainActivity.this, VideoActivity.class);
 			    String video = Array_Video.get(position).getLink();
 			    intent.putExtra("videoURL", video);
-			    Toast.makeText(MainActivity.this, video, Toast.LENGTH_SHORT).show();
+			    //Toast.makeText(MainActivity.this, video, Toast.LENGTH_SHORT).show();
 			    startActivity(intent);
 		   
 		  }
@@ -206,14 +209,26 @@ public class MainActivity extends ActionBarActivity {
 				btnLoadMore.setVisibility(View.VISIBLE);						
 				if(firstTimeAsync) {
 					dialog.cancel();
-					firstTimeAsync = false;					
+					firstTimeAsync = false;
+					//Hide the btnloadmore, if you dont get enough results!
+					if(Array_Video.size()<perPage){
+						lv.removeFooterView(btnLoadMore);
+					}else{
+						lv.addFooterView(btnLoadMore);
+					}
 				} else {
 					lv.removeFooterView(pgBar);
-					lv.addFooterView(btnLoadMore);
 					if(Array_1.size() == 0){
 						lv.removeFooterView(btnLoadMore);
 						flag_loading = true;
-					}		
+					}	
+					//Hide the btnloadmore, if you dont get enough results!
+					if(Array_Video.size()<perPage){
+						lv.removeFooterView(btnLoadMore);
+					}else{
+						lv.addFooterView(btnLoadMore);
+					}
+						
 				}   
 	         } else {
 	            if (error != null) {
@@ -235,12 +250,13 @@ public class MainActivity extends ActionBarActivity {
 		
 		public RefreshButtonAsync(Context c, String url) {
 			this.ctx = c;
-			this.feedUrl = url;			
+			this.feedUrl = url;				
 		}
 		
 		@Override
 		protected void onPreExecute() {
-			lv.removeFooterView(btnLoadMore);
+			startIndex = 1;
+			//lv.removeFooterView(btnLoadMore);
 			//setSupportProgressBarIndeterminateVisibility(true);			
 			MenuItemCompat.setActionView(refreshMenuItem, R.layout.action_progress_bar);			 
             MenuItemCompat.expandActionView(refreshMenuItem);	
@@ -249,10 +265,13 @@ public class MainActivity extends ActionBarActivity {
 		
 		@Override
 		protected Boolean doInBackground(String... params) {
-			lv.smoothScrollToPosition(0);					
-			XMLParser parser = new XMLParser(feedUrl, ctx);
-			Array_Video = parser.parse();
-			return false;
+			try {				
+				XMLParser parser = new XMLParser(feedUrl, ctx);
+				Array_Video = parser.parse();
+	             return true;
+	        } catch (Exception e) {	            
+	        	return false;
+	        } 			
 		}	
 		
 		@Override
@@ -260,7 +279,12 @@ public class MainActivity extends ActionBarActivity {
 			initListView();		
 			lv.setSelection(0);
 			btnLoadMore.setVisibility(View.VISIBLE);
-			lv.addFooterView(btnLoadMore);
+			if(Array_Video.size()<perPage){
+				lv.removeFooterView(btnLoadMore);
+			}else{
+				lv.addFooterView(btnLoadMore);
+			}
+			
 			//setSupportProgressBarIndeterminateVisibility(false);
 			MenuItemCompat.collapseActionView(refreshMenuItem);
             MenuItemCompat.setActionView(refreshMenuItem, null);
@@ -276,6 +300,7 @@ public class MainActivity extends ActionBarActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main_menu, menu);
+				
 		return true;
 	}
 
@@ -283,22 +308,21 @@ public class MainActivity extends ActionBarActivity {
 		switch(item.getItemId()) {
 			// action with ID action_refresh was selected
 		case R.id.action_refresh:
-			lv.removeFooterView(btnLoadMore);
+			
 			if(isOnline()) {
 				refreshMenuItem = item;
 				new RefreshButtonAsync(MainActivity.this, generateUrl(1, perPage)).execute();
 				
 			} else {
 				Log.i("isOnline", String.valueOf(isOnline()));
-				Toast.makeText(MainActivity.this, "Internet Connection Problem. Retry.", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(MainActivity.this, "Internet Connection Problem. Retry.", Toast.LENGTH_SHORT).show();
 				lv.addFooterView(btnLoadMore);
 			}
 			break;
 			// action with ID action_settings was selected
 		case R.id.action_settings:
-			Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
-				.show();
-			Intent intent2 = new Intent(this, Preferencias.class);		    
+			//Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT).show();
+			Intent intent2 = new Intent(this, Preferences.class);		    
 		    startActivity(intent2);
 			break;			
 		case R.id.action_contact:

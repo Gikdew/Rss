@@ -15,6 +15,7 @@ import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
@@ -63,8 +64,14 @@ public class DownloadService extends Service {
         @Override
         protected Boolean doInBackground(URL... params) {
         	try {
-        		XMLParser parser = new XMLParser(generateUrl(1, 1), DownloadService.this);
-    			Array_Video = parser.parse();
+				if(!c.playlistMode){
+					XMLParser parser = new XMLParser(c.generateUrl(1, 1), DownloadService.this);
+	    			Array_Video = parser.parse();
+				}else{
+					XmlParseList parser = new XmlParseList(c.generateUrl(1, 1), DownloadService.this);
+	    			Array_Video = parser.parse();
+				}		
+        		
     			Log.i("Service", Array_Video.get(0).getDate().toString());
     			return true;
 			} catch (Exception e) {
@@ -96,7 +103,11 @@ public class DownloadService extends Service {
             			editor.putBoolean("firstTime", false);
             			editor.commit();
             		}else{
-            			sendNotification();
+            			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());            			          			 
+            			if(preferences.getBoolean("notification", true)){
+            				 sendNotification();
+            			}
+            			
             		}         		
             		      		
             		
@@ -136,15 +147,7 @@ public class DownloadService extends Service {
 			
 			notificationManager.notify(0, mBuilder.build()); 
 			
-		}
-
-		public String generateUrl(int startPos, int pageNumber) {
-		return "http://gdata.youtube.com/feeds/api/users/"+ youtubeUser + 
-				"/uploads?max-results=" + String.valueOf(pageNumber) + 
-				"&start-index=" + String.valueOf(startPos) + 
-				"&alt=rss";
-	}
-        
+		}		        
     }
  
 }

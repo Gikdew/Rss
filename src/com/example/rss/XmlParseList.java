@@ -15,16 +15,15 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import android.app.DownloadManager.Query;
 import android.content.Context;
 import android.util.Log;
 
-public class XMLParser {
+public class XmlParseList {
 	private URL url;
 	Context contextor;
 	ConfigClass c = new ConfigClass();
 
-	public XMLParser(String url, Context contexto) {
+	public XmlParseList(String url, Context contexto) {
 		contextor = contexto;
 		try {
 			this.url = new URL(url);
@@ -44,14 +43,14 @@ public class XMLParser {
 		try {
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			Document dom = builder.parse(this.url.openConnection().getInputStream());
+			Log.i("Dom", dom.toString());
 			Element root = dom.getDocumentElement();
-			String query, date;
-			NodeList items = root.getElementsByTagName("item");
+			NodeList items = root.getElementsByTagName("entry");
 			for (int i = 0; i < items.getLength(); i++) {
 				Video = new Video();
 				Node item = items.item(i);
 				NodeList properties = item.getChildNodes();
-				//Log.i("NodeList", properties.toString());
+				Log.i("NodeList", String.valueOf(items.getLength()));
 				for (int j = 0; j < properties.getLength(); j++) {
 					Node property = properties.item(j);
 					String name = property.getNodeName();
@@ -79,17 +78,23 @@ public class XMLParser {
 						}
 					} else if (name.equalsIgnoreCase("description")) {
 					} else if (name.equalsIgnoreCase("link")) {
-						String link = property.getFirstChild().getNodeValue();
-
-						Video.setLink(link);
-					} else if (name.equalsIgnoreCase("pubDate")) {
+						Element e = (Element) property;	
+						Log.i("Attribute Rel", e.getAttribute("rel"));
+						if(e.getAttribute("rel").equalsIgnoreCase("alternate")){
+							String link = e.getAttribute("href");
+							Video.setLink(link);
+						}
+												
+						
+					} else if (name.equalsIgnoreCase("publishedd")) {
 						Video.setDate(formatter.parse(""+property.getFirstChild().getNodeValue()));				
 					}
 				}
 				Videos.add(Video);
-				//Log.i("Parsher", "Video Image: " + Video.getLink());
+				Log.i("Parsher", "Video Image: " + Video.getLink());
 			}
 		} catch (Exception e) {
+			Log.i("XmlParserProblem", e.toString());
 			throw new RuntimeException(e);
 		}
 		return Videos;

@@ -18,9 +18,10 @@ public class Video {
 		this.title = title;		
 	}	
 	public void setLink(String link){
-		String link1 = "http://youtube.com/v?=879698769876&gdata";
+		String link1 = "";
 		if(link.indexOf('=')!=-1){
 			String urlpart = link.substring(link.indexOf('='));
+			
 			if(urlpart.indexOf("&")!=-1){
 				int enddelimiterImage = urlpart.indexOf("&");						
 				link1 = link.substring(link.indexOf('=')+1,link.indexOf('=')+enddelimiterImage);

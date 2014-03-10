@@ -8,12 +8,14 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
@@ -61,7 +63,7 @@ public class MainActivity extends ActionBarActivity {
 		Intent i= new Intent(MainActivity.this, DownloadService.class);
 		MainActivity.this.startService(i);
 
-		URL = generateUrl(startIndex, perPage);
+		URL = c.generateUrl(startIndex, perPage);
 		
 		
 
@@ -87,7 +89,8 @@ public class MainActivity extends ActionBarActivity {
 	                int visibleItemCount, int totalItemCount) {
 	            if(firstVisibleItem+visibleItemCount == totalItemCount - 4 && totalItemCount!=0)
 	            {
-	                if(flag_loading == false)
+	            	SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+	                if(flag_loading == false && preferences.getBoolean("scroll", true))
 	                {
 	                    flag_loading = true;
 	                    btnLoadMore.performClick();
@@ -108,7 +111,7 @@ public class MainActivity extends ActionBarActivity {
 				lv.removeFooterView(btnLoadMore);
 				startIndex += perPage;
 				if(isOnline()){
-					new DownloadVideos(MainActivity.this, generateUrl(startIndex, perPage)).execute();					
+					new DownloadVideos(MainActivity.this, c.generateUrl(startIndex, perPage)).execute();					
 				}else{
 					Toast.makeText(MainActivity.this, "Internet Connection Problem. Retry.", Toast.LENGTH_SHORT).show();
 				}
@@ -121,13 +124,6 @@ public class MainActivity extends ActionBarActivity {
 		
 	}
 
-	public String generateUrl(int startPos, int pageNumber) {
-		return "http://gdata.youtube.com/feeds/api/users/"+ youtubeUser + 
-				"/uploads?max-results=" + String.valueOf(pageNumber) + 
-				"&start-index=" + String.valueOf(startPos) + 
-				"&alt=rss";
-	}
-
 	private void initListView() {
 		adapter = new Video_adapter(this, Array_Video);
 		lv.setAdapter(adapter);		
@@ -137,7 +133,7 @@ public class MainActivity extends ActionBarActivity {
 	private void fillVideos() {
 		if(isOnline()) {
 			startIndex = 1;
-			new DownloadVideos(MainActivity.this, generateUrl(startIndex, perPage)).execute();
+			new DownloadVideos(MainActivity.this, c.generateUrl(startIndex, perPage)).execute();
 		} else {
 			Log.i("isOnline", String.valueOf(isOnline()));
 			Toast.makeText(MainActivity.this, "Internet Connection Problem. Retry.", Toast.LENGTH_SHORT).show();
@@ -190,8 +186,14 @@ public class MainActivity extends ActionBarActivity {
 		@Override
 		protected Boolean doInBackground(final String...args) {
 			try {
-				XMLParser parser = new XMLParser(feedUrl, getBaseContext());
-				Array_1 = parser.parse();
+				if(!c.playlistMode){
+					XMLParser parser = new XMLParser(feedUrl, getBaseContext());
+					Array_1 = parser.parse();
+				}else{
+					XmlParseList parser = new XmlParseList(feedUrl, getBaseContext());
+					Array_1 = parser.parse();
+				}				
+				
 				Array_Video.addAll(Array_1);
 	             return true;
 	        } catch (Exception e) {	            
@@ -266,8 +268,13 @@ public class MainActivity extends ActionBarActivity {
 		@Override
 		protected Boolean doInBackground(String... params) {
 			try {				
-				XMLParser parser = new XMLParser(feedUrl, ctx);
-				Array_Video = parser.parse();
+				if(!c.playlistMode){
+					XMLParser parser = new XMLParser(feedUrl, getBaseContext());
+					Array_Video = parser.parse();
+				}else{
+					XmlParseList parser = new XmlParseList(feedUrl, getBaseContext());
+					Array_Video = parser.parse();
+				}		
 	             return true;
 	        } catch (Exception e) {	            
 	        	return false;
@@ -311,7 +318,7 @@ public class MainActivity extends ActionBarActivity {
 			
 			if(isOnline()) {
 				refreshMenuItem = item;
-				new RefreshButtonAsync(MainActivity.this, generateUrl(1, perPage)).execute();
+				new RefreshButtonAsync(MainActivity.this, c.generateUrl(1, perPage)).execute();
 				
 			} else {
 				Log.i("isOnline", String.valueOf(isOnline()));

@@ -87,7 +87,7 @@ public class MainActivity extends ActionBarActivity {
 	        }
 	        public void onScroll(AbsListView view, int firstVisibleItem,
 	                int visibleItemCount, int totalItemCount) {
-	            if(firstVisibleItem+visibleItemCount == totalItemCount - 4 && totalItemCount!=0)
+	            if(firstVisibleItem+visibleItemCount == totalItemCount - 1 && totalItemCount!=0)
 	            {
 	            	SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 	                if(flag_loading == false && preferences.getBoolean("scroll", true))
@@ -103,7 +103,7 @@ public class MainActivity extends ActionBarActivity {
 		btnLoadMore.setText("Load More");
 		btnLoadMore.setTextColor(Color.WHITE);
 		btnLoadMore.setVisibility(View.GONE);
-		lv.addFooterView(btnLoadMore);
+		//lv.addFooterView(btnLoadMore);
 		btnLoadMore.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -190,7 +190,7 @@ public class MainActivity extends ActionBarActivity {
 					XMLParser parser = new XMLParser(feedUrl, getBaseContext());
 					Array_1 = parser.parse();
 				}else{
-					XmlParseList parser = new XmlParseList(feedUrl, getBaseContext());
+					XMLParserList parser = new XMLParserList(feedUrl, getBaseContext());
 					Array_1 = parser.parse();
 				}				
 				
@@ -219,17 +219,17 @@ public class MainActivity extends ActionBarActivity {
 						lv.addFooterView(btnLoadMore);
 					}
 				} else {
+					//Log.i("Array",String.valueOf(Array_Video.size()));
 					lv.removeFooterView(pgBar);
 					if(Array_1.size() == 0){
-						lv.removeFooterView(btnLoadMore);
-						flag_loading = true;
+						if(Array_1.size()<perPage){
+							lv.removeFooterView(btnLoadMore);
+						}else{
+							lv.addFooterView(btnLoadMore);
+						}
 					}	
 					//Hide the btnloadmore, if you dont get enough results!
-					if(Array_Video.size()<perPage){
-						lv.removeFooterView(btnLoadMore);
-					}else{
-						lv.addFooterView(btnLoadMore);
-					}
+					
 						
 				}   
 	         } else {
@@ -257,7 +257,7 @@ public class MainActivity extends ActionBarActivity {
 		
 		@Override
 		protected void onPreExecute() {
-			startIndex = 1;
+			startIndex = 1;			
 			//lv.removeFooterView(btnLoadMore);
 			//setSupportProgressBarIndeterminateVisibility(true);			
 			MenuItemCompat.setActionView(refreshMenuItem, R.layout.action_progress_bar);			 
@@ -272,7 +272,7 @@ public class MainActivity extends ActionBarActivity {
 					XMLParser parser = new XMLParser(feedUrl, getBaseContext());
 					Array_Video = parser.parse();
 				}else{
-					XmlParseList parser = new XmlParseList(feedUrl, getBaseContext());
+					XMLParserList parser = new XMLParserList(feedUrl, getBaseContext());
 					Array_Video = parser.parse();
 				}		
 	             return true;
@@ -286,12 +286,13 @@ public class MainActivity extends ActionBarActivity {
 			initListView();		
 			lv.setSelection(0);
 			btnLoadMore.setVisibility(View.VISIBLE);
+			/*
 			if(Array_Video.size()<perPage){
 				lv.removeFooterView(btnLoadMore);
 			}else{
 				lv.addFooterView(btnLoadMore);
 			}
-			
+			*/
 			//setSupportProgressBarIndeterminateVisibility(false);
 			MenuItemCompat.collapseActionView(refreshMenuItem);
             MenuItemCompat.setActionView(refreshMenuItem, null);
@@ -317,8 +318,12 @@ public class MainActivity extends ActionBarActivity {
 		case R.id.action_refresh:
 			
 			if(isOnline()) {
+				if(!flag_loading){
 				refreshMenuItem = item;
 				new RefreshButtonAsync(MainActivity.this, c.generateUrl(1, perPage)).execute();
+				}else{
+					Toast.makeText(MainActivity.this, "Wait. Downloading videos...", Toast.LENGTH_SHORT).show();
+				}
 				
 			} else {
 				Log.i("isOnline", String.valueOf(isOnline()));

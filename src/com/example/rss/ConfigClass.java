@@ -2,12 +2,14 @@ package com.example.rss;
 
 public class ConfigClass {
 	
-	String youtubeUser = "willyrex";
+	String youtubeUser = "Smosh"; //UCtGG8ucQgEJPeUPhJZ4M4jA
 	String playlistID = "A84B69B84AF29E41";
-	Boolean playlistMode = true; //Not imlemented yet (Always false)
-	int perPage = playlistMode ? 25 : 10; //Number of results per page
+	Boolean playlistMode = false; //Not imlemented yet (Always false)
+	int perPage = playlistMode ? 25 : 6; //Number of results per page
 	int startIndex = 1; //First result to get
 	String DEVELOPER_KEY = "AIzaSyDsbCn-hOTV6yTpSKW_syy78D2rS39yXt8";
+	String ADMOB_KEY = "";
+	String APPNEXT_KEY = "";
 	
 	public String generateUrl(int startPos, int pageNumber) {
 		if(!playlistMode){

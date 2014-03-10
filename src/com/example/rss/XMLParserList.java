@@ -18,12 +18,12 @@ import org.w3c.dom.NodeList;
 import android.content.Context;
 import android.util.Log;
 
-public class XmlParseList {
+public class XMLParserList {
 	private URL url;
 	Context contextor;
 	ConfigClass c = new ConfigClass();
 
-	public XmlParseList(String url, Context contexto) {
+	public XMLParserList(String url, Context contexto) {
 		contextor = contexto;
 		try {
 			this.url = new URL(url);

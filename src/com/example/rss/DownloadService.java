@@ -68,7 +68,7 @@ public class DownloadService extends Service {
 					XMLParser parser = new XMLParser(c.generateUrl(1, 1), DownloadService.this);
 	    			Array_Video = parser.parse();
 				}else{
-					XmlParseList parser = new XmlParseList(c.generateUrl(1, 1), DownloadService.this);
+					XMLParserList parser = new XMLParserList(c.generateUrl(1, 1), DownloadService.this);
 	    			Array_Video = parser.parse();
 				}		
         		

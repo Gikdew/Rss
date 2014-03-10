@@ -2,6 +2,7 @@ package com.example.rss;
 
 import java.util.ArrayList;
 
+import com.android.volley.toolbox.Volley;
 import com.appnext.appnextsdk.Appnext;
 
 import android.R.string;
@@ -357,6 +358,7 @@ public class MainActivity extends ActionBarActivity {
 			
 			if(isOnline()) {
 				if(!flag_loading){
+					
 				refreshMenuItem = item;
 				new RefreshButtonAsync(MainActivity.this, c.generateUrl(1, perPage)).execute();
 				}else{

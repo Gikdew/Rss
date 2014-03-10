@@ -69,7 +69,7 @@ s
             android:name=".mainToVideo"
             android:label="Video" 
             android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.NoTitleBar">	       
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">	       
         </activity>
         
         <activity

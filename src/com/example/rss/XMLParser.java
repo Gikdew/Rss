@@ -55,7 +55,7 @@ public class XMLParser {
 				for (int j = 0; j < properties.getLength(); j++) {
 					Node property = properties.item(j);
 					String name = property.getNodeName();
-					Log.i("name", name);
+					//Log.i("name", name);
 					if (name.equalsIgnoreCase("title")) {
 						Video.setTitle(property.getFirstChild().getNodeValue());
 					} else if (name.equalsIgnoreCase("media:group")) {

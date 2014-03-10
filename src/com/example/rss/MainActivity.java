@@ -103,7 +103,7 @@ public class MainActivity extends ActionBarActivity {
 		btnLoadMore.setText("Load More");
 		btnLoadMore.setTextColor(Color.WHITE);
 		btnLoadMore.setVisibility(View.GONE);
-		//lv.addFooterView(btnLoadMore);
+		lv.addFooterView(btnLoadMore);
 		btnLoadMore.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -135,7 +135,7 @@ public class MainActivity extends ActionBarActivity {
 			startIndex = 1;
 			new DownloadVideos(MainActivity.this, c.generateUrl(startIndex, perPage)).execute();
 		} else {
-			Log.i("isOnline", String.valueOf(isOnline()));
+			//Log.i("isOnline", String.valueOf(isOnline()));
 			Toast.makeText(MainActivity.this, "Internet Connection Problem. Retry.", Toast.LENGTH_SHORT).show();
 		}
 	}
@@ -220,7 +220,7 @@ public class MainActivity extends ActionBarActivity {
 						lv.addFooterView(btnLoadMore);
 					}
 				} else {
-					//Log.i("Array",String.valueOf(Array_Video.size()));
+					////Log.i("Array",String.valueOf(Array_Video.size()));
 					lv.removeFooterView(pgBar);
 					if(Array_1.size() == 0){
 						lv.removeFooterView(btnLoadMore);
@@ -328,7 +328,7 @@ public class MainActivity extends ActionBarActivity {
 				}
 				
 			} else {
-				Log.i("isOnline", String.valueOf(isOnline()));
+				//Log.i("isOnline", String.valueOf(isOnline()));
 				//Toast.makeText(MainActivity.this, "Internet Connection Problem. Retry.", Toast.LENGTH_SHORT).show();
 				lv.addFooterView(btnLoadMore);
 			}

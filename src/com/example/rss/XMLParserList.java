@@ -43,18 +43,18 @@ public class XMLParserList {
 		try {
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			Document dom = builder.parse(this.url.openConnection().getInputStream());
-			Log.i("Dom", dom.toString());
+			//Log.i("Dom", dom.toString());
 			Element root = dom.getDocumentElement();
 			NodeList items = root.getElementsByTagName("entry");
 			for (int i = 0; i < items.getLength(); i++) {
 				Video = new Video();
 				Node item = items.item(i);
 				NodeList properties = item.getChildNodes();
-				Log.i("NodeList", String.valueOf(items.getLength()));
+				//Log.i("NodeList", String.valueOf(items.getLength()));
 				for (int j = 0; j < properties.getLength(); j++) {
 					Node property = properties.item(j);
 					String name = property.getNodeName();
-					Log.i("name", name);
+					//Log.i("name", name);
 					if (name.equalsIgnoreCase("title")) {
 						Video.setTitle(property.getFirstChild().getNodeValue());
 					} else if (name.equalsIgnoreCase("media:group")) {
@@ -79,7 +79,7 @@ public class XMLParserList {
 					} else if (name.equalsIgnoreCase("description")) {
 					} else if (name.equalsIgnoreCase("link")) {
 						Element e = (Element) property;	
-						Log.i("Attribute Rel", e.getAttribute("rel"));
+						//Log.i("Attribute Rel", e.getAttribute("rel"));
 						if(e.getAttribute("rel").equalsIgnoreCase("alternate")){
 							String link = e.getAttribute("href");
 							Video.setLink(link);
@@ -91,10 +91,10 @@ public class XMLParserList {
 					}
 				}
 				Videos.add(Video);
-				Log.i("Parsher", "Video Image: " + Video.getLink());
+				//Log.i("Parsher", "Video Image: " + Video.getLink());
 			}
 		} catch (Exception e) {
-			Log.i("XmlParserProblem", e.toString());
+			//Log.i("XmlParserProblem", e.toString());
 			throw new RuntimeException(e);
 		}
 		return Videos;

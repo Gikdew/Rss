@@ -28,12 +28,12 @@ public class DownloadService extends Service {
     Exception error;
     
 	ConfigClass c = new ConfigClass();
-	String youtubeUser = c.youtubeUser;
+	String youtubeUser = c.playlistMode ? "" : c.youtubeUser;
 	
     
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-    	Log.i("Service", "Started");
+    	//Log.i("Service", "Started");
         new DownloaderTask().execute();
         return START_STICKY;
     }
@@ -49,7 +49,7 @@ public class DownloadService extends Service {
     	
     	@Override
     	protected void onPreExecute() {
-    		if(!lastVideo.contains("day") || !lastVideo.contains("hour") || !lastVideo.contains("minute") ){
+    		if(!lastVideo.contains("day") || !lastVideo.contains("hour") || !lastVideo.contains("minute") || !lastVideo.contains("lastUrl") ){
     			editor.putInt("day", 0);
     			editor.commit();
     			
@@ -57,6 +57,9 @@ public class DownloadService extends Service {
     			editor.commit();
     			
     			editor.putInt("minute", 0);
+    			editor.commit();
+    			
+    			editor.putString("lastUrl", "");
     			editor.commit();
     		}    		
     	}
@@ -72,10 +75,10 @@ public class DownloadService extends Service {
 	    			Array_Video = parser.parse();
 				}		
         		
-    			Log.i("Service", Array_Video.get(0).getDate().toString());
+    			//Log.i("Service", Array_Video.get(0).getDate().toString());
     			return true;
 			} catch (Exception e) {
-				Log.i("Service", "Catch in Do in background");
+				//Log.i("Service", "Catch in Do in background");
 				return false;
 			}
         	
@@ -89,14 +92,17 @@ public class DownloadService extends Service {
         		            	
             	if((video.getDate().getDay() != lastVideo.getInt("day", 0)) || 
             			(video.getDate().getHours() != lastVideo.getInt("hour", 0)) ||
-            			(video.getDate().getMinutes() != lastVideo.getInt("minute", 0))){
+            			(video.getDate().getMinutes() != lastVideo.getInt("minute", 0)) || 
+            			!video.getLink().equals(lastVideo.getString("lastUrl", ""))){
             		
-            		Log.i("New", "Video");
+            		//Log.i("New", "Video");
             		editor.putInt("day", video.getDate().getDay());
             		editor.commit();
             		editor.putInt("minute", video.getDate().getMinutes());
             		editor.commit();
             		editor.putInt("hour", video.getDate().getHours());
+            		editor.commit();
+            		editor.putString("lastUrl", video.getLink());
             		editor.commit();
             		
             		if(!lastVideo.contains("firstTime")){

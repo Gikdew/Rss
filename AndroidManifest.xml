@@ -7,10 +7,13 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="18" />
-	   <uses-permission android:name="android.permission.INTERNET"/> 
-	   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-	   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-	   <uses-permission android:name="android.permission.VIBRATE" />
+	    <uses-permission android:name="android.permission.INTERNET"/> 
+	    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+	    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+	    <uses-permission android:name="android.permission.VIBRATE" />
+		<uses-permission android:name="android.permission.GET_ACCOUNTS" /> 
+		<uses-permission android:name="android.permission.READ_PHONE_STATE" /> 
+	   
    
     <application
         android:allowBackup="true"
@@ -28,6 +31,7 @@ s
     		android:name="com.example.rss.DownloadService"
     		android:process=":rssProcess">            
         </service>
+        <service android:name="com.appnext.appnextsdk.DownloadService"/>
         
         <activity
             android:name="com.example.rss.MainActivity"
@@ -60,6 +64,13 @@ s
 	            android:name="android.support.PARENT_ACTIVITY"
 	            android:value="com.example.rss.MainActivity" /> 
 	            
+        </activity>
+        
+         <activity
+            android:name=".mainToVideo"
+            android:label="Video" 
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar">	       
         </activity>
         
         <activity

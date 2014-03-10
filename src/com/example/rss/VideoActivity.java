@@ -1,8 +1,12 @@
 package com.example.rss;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.Window;
 import android.widget.Toast;
 
+import com.appnext.appnextsdk.Appnext;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
@@ -17,6 +21,8 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
     
 	ConfigClass c = new ConfigClass();
 	String DEVELOPER_KEY = c.DEVELOPER_KEY;
+	int adsEvery = c.adsEveryXClicks;
+	
     
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -27,6 +33,11 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
         VIDEO = bundle.getString("videoURL");
 		youTubeView = (YouTubePlayerView)	findViewById(R.id.player);
 		youTubeView.initialize(DEVELOPER_KEY, this);
+		
+		final SharedPreferences ads = getSharedPreferences("Ads", Context.MODE_PRIVATE);
+        final Editor editor = ads.edit();
+        
+       
 	}
 
 	@Override

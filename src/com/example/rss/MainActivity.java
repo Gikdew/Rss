@@ -2,6 +2,8 @@ package com.example.rss;
 
 import java.util.ArrayList;
 
+import com.appnext.appnextsdk.Appnext;
+
 import android.R.string;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -16,6 +18,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
@@ -52,30 +56,62 @@ public class MainActivity extends ActionBarActivity {
 	String youtubeUser = c.youtubeUser;
 	int perPage = c.perPage;
 	int startIndex = c.startIndex;
+	boolean appnext = c.appnextEnabled;
+	String appnextKey = c.APPNEXT_KEY;
+	int adsEvery = c.adsEveryXClicks;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		
+	protected void onCreate(Bundle savedInstanceState) {		
 		super.onCreate(savedInstanceState);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_main);
 		
 		Intent i= new Intent(MainActivity.this, DownloadService.class);
 		MainActivity.this.startService(i);
+		
+		//Shared Preferences for Ads
+		final SharedPreferences ads = getSharedPreferences("Ads", Context.MODE_PRIVATE);
+        final Editor editor = ads.edit();
+        editor.putInt("counter", 0);
+	   	editor.commit();
+        
+        if(appnext){
+        	Appnext appnext; 
+        	appnext = new Appnext(this); 
+        	appnext.setAppID(appnextKey); // Set your AppID 
+        	appnext.showBubble(); // show the interstitial 
+        }        
 
-		URL = c.generateUrl(startIndex, perPage);
-		
-		
+		URL = c.generateUrl(startIndex, perPage);		
 
 		lv = (ListView) findViewById(R.id.videos_listview);
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 		  @Override
-		  public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {			  
-			  	Intent intent = new Intent(MainActivity.this, VideoActivity.class);
-			    String video = Array_Video.get(position).getLink();
-			    intent.putExtra("videoURL", video);
-			    //Toast.makeText(MainActivity.this, video, Toast.LENGTH_SHORT).show();
-			    startActivity(intent);
+		  public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+			  
+			   	editor.putInt("counter", ads.getInt("counter", 0)+1);
+			   	editor.commit();			  
+			   	if(appnext && ads.getInt("counter", 0) == adsEvery){
+			   		
+			   		editor.putInt("counter", 0);
+				   	editor.commit();	
+				   	
+			   		Intent intent = new Intent(MainActivity.this, mainToVideo.class);
+				    String video = Array_Video.get(position).getLink();
+				    intent.putExtra("videoURL", video);
+				    //Toast.makeText(MainActivity.this, video, Toast.LENGTH_SHORT).show();
+				    startActivity(intent);
+				    
+			   	}else{
+			   		Intent intent = new Intent(MainActivity.this, VideoActivity.class);
+				    String video = Array_Video.get(position).getLink();
+				    intent.putExtra("videoURL", video);
+				    //Toast.makeText(MainActivity.this, video, Toast.LENGTH_SHORT).show();
+				    startActivity(intent);
+			   	}
+			   	Log.i("Counter", String.valueOf(ads.getInt("counter", 0)));
+			  	
 		   
 		  }
 		});

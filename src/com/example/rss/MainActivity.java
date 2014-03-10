@@ -178,6 +178,7 @@ public class MainActivity extends ActionBarActivity {
 			} else {
 				pgBar = (ProgressBar) layoutInflater.inflate(R.layout.progress_bar, null);
 				pgBar.setIndeterminate(true);
+				//lv.removeFooterView(btnLoadMore);
 				lv.addFooterView(pgBar);
 				//lv.setSelection(lv.getCount()-1);
 			}
@@ -222,12 +223,13 @@ public class MainActivity extends ActionBarActivity {
 					//Log.i("Array",String.valueOf(Array_Video.size()));
 					lv.removeFooterView(pgBar);
 					if(Array_1.size() == 0){
-						if(Array_1.size()<perPage){
-							lv.removeFooterView(btnLoadMore);
-						}else{
-							lv.addFooterView(btnLoadMore);
-						}
+						lv.removeFooterView(btnLoadMore);
 					}	
+					if(Array_1.size()<perPage){
+						lv.removeFooterView(btnLoadMore);
+					}else{
+						lv.addFooterView(btnLoadMore);
+					}
 					//Hide the btnloadmore, if you dont get enough results!
 					
 						

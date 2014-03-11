@@ -2,7 +2,34 @@
 <resources>
 
     <string name="app_name">Smosh</string>
-    <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+        
+    
+    <!-- Contact -->
+    <string name="contact">Contact</string>
+    <string name="developer">APePe Studio</string>
+    <string name="twitter">APePeStudio</string>
+    <string name="email">correo@ejemplo.com</string>
+    <string name="facebook_page">apepestudio</string>
+    <string name="market_dev">Apepe Studio</string>
+    <string name="more_apps">More Apps</string>
+    <string name="do_you_want">Do you want an App? \n Contact Us!</string>
+    <string name="contact_us">Contact Us!</string>
+    <string name="i_want_app">I want an Android App!</string>
+    <string name="no_market_problem">Unable to find Google Play app.</string>
+    
+    <!-- Main Activity -->
+    <string name="load_more">Load More</string>
+    <string name="internet_problem">Internet Connection Problem. Retry.</string>
+    <string name="wait_downloading">Wait. Downloading videos&#8230;</string>
+    
+    <!-- Preferences -->
+    <string name="settings">Settings</string>
+    <string name="infinite_scrolling">Infinite Scrolling</string>
+    <string name="infinite_scrolling_desc">Load more videos automatic on scroll down</string>
+    <string name="notifications">Notifications</string>
+    <string name="notifications_desc">Shows notifications on new video upload</string>
+    
+    <!-- Download Service -->
+    <string name="youtubeUser">Willyrex</string>
 
 </resources>

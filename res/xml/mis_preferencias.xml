@@ -4,14 +4,14 @@
     
     <CheckBoxPreference
     android:key="notification"
-    android:title="Notifications" 
-    android:summary="Shows notifications on new video upload"
+    android:title="@string/notifications" 
+    android:summary="@string/notifications_desc"
     android:defaultValue="true"/>
     
     <CheckBoxPreference
     android:key="scroll"
-    android:title="Infinite Scrolling" 
-    android:summary="Load more videos automatic on scroll down"
+    android:title="@string/infinite_scrolling" 
+    android:summary="@string/infinite_scrolling_desc"
     android:defaultValue="true"/>    
 
 </PreferenceScreen>

@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -76,6 +77,9 @@ public class MainActivity extends ActionBarActivity {
         final Editor editor = ads.edit();
         editor.putInt("counter", 0);
 	   	editor.commit();
+	   	
+	   	//Font
+	    final Typeface font = Typeface.createFromAsset(getAssets(), "fonts/sintony.otf");
         
         if(appnext){
         	Appnext appnext; 
@@ -102,6 +106,7 @@ public class MainActivity extends ActionBarActivity {
 				    String video = Array_Video.get(position).getLink();
 				    intent.putExtra("videoURL", video);
 				    //Toast.makeText(MainActivity.this, video, Toast.LENGTH_SHORT).show();
+				    moveTaskToBack(true); 
 				    startActivity(intent);
 				    
 			   	}else{
@@ -109,6 +114,7 @@ public class MainActivity extends ActionBarActivity {
 				    String video = Array_Video.get(position).getLink();
 				    intent.putExtra("videoURL", video);
 				    //Toast.makeText(MainActivity.this, video, Toast.LENGTH_SHORT).show();
+				    moveTaskToBack(true); 
 				    startActivity(intent);
 			   	}
 			   	Log.i("Counter", String.valueOf(ads.getInt("counter", 0)));
@@ -117,6 +123,11 @@ public class MainActivity extends ActionBarActivity {
 		  }
 		});
 		
+		final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		Editor edit = preferences.edit();
+		edit.putBoolean("scroll", true);
+		edit.commit();
+		
 		flag_loading = false;
 		lv.setOnScrollListener(new OnScrollListener() {
 	        public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -124,22 +135,26 @@ public class MainActivity extends ActionBarActivity {
 	        }
 	        public void onScroll(AbsListView view, int firstVisibleItem,
 	                int visibleItemCount, int totalItemCount) {
-	            if(firstVisibleItem+visibleItemCount == totalItemCount - 1 && totalItemCount!=0)
+	            if(firstVisibleItem+visibleItemCount == totalItemCount - c.velocity && totalItemCount!=0)
 	            {
-	            	SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-	                if(flag_loading == false && preferences.getBoolean("scroll", true))
+	            	if(flag_loading == false && preferences.getBoolean("scroll", true))
 	                {
-	                    flag_loading = true;
+	                	flag_loading = true;
 	                    btnLoadMore.performClick();
+	                }else{
+	                	
 	                }
 	            }
 	        }
 	    });
 		
 		btnLoadMore = new Button(this);
-		btnLoadMore.setText("Load More");
+		btnLoadMore.setText(R.string.load_more);
+		btnLoadMore.setTypeface(font);
+		btnLoadMore.setSoundEffectsEnabled(false);
 		btnLoadMore.setTextColor(Color.WHITE);
 		btnLoadMore.setVisibility(View.GONE);
+		//btnLoadMore.setBackgroundResource(R.drawable.button_flat_c);
 		lv.addFooterView(btnLoadMore);
 		btnLoadMore.setOnClickListener(new View.OnClickListener() {
 			
@@ -150,7 +165,7 @@ public class MainActivity extends ActionBarActivity {
 				if(isOnline()){
 					new DownloadVideos(MainActivity.this, c.generateUrl(startIndex, perPage)).execute();					
 				}else{
-					Toast.makeText(MainActivity.this, "Internet Connection Problem. Retry.", Toast.LENGTH_SHORT).show();
+					Toast.makeText(MainActivity.this, R.string.internet_problem, Toast.LENGTH_SHORT).show();
 				}
 				
 			}
@@ -173,7 +188,7 @@ public class MainActivity extends ActionBarActivity {
 			new DownloadVideos(MainActivity.this, c.generateUrl(startIndex, perPage)).execute();
 		} else {
 			//Log.i("isOnline", String.valueOf(isOnline()));
-			Toast.makeText(MainActivity.this, "Internet Connection Problem. Retry.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(MainActivity.this, R.string.internet_problem, Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -362,7 +377,7 @@ public class MainActivity extends ActionBarActivity {
 				refreshMenuItem = item;
 				new RefreshButtonAsync(MainActivity.this, c.generateUrl(1, perPage)).execute();
 				}else{
-					Toast.makeText(MainActivity.this, "Wait. Downloading videos...", Toast.LENGTH_SHORT).show();
+					Toast.makeText(MainActivity.this, R.string.wait_downloading, Toast.LENGTH_SHORT).show();
 				}
 				
 			} else {
@@ -378,7 +393,7 @@ public class MainActivity extends ActionBarActivity {
 		    startActivity(intent2);
 			break;			
 		case R.id.action_contact:
-			Intent intent = new Intent(this, Contacto.class);		    
+			Intent intent = new Intent(this, Contact.class);		    
 		    startActivity(intent);
 		default:
 			break;

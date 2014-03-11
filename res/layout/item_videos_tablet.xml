@@ -49,5 +49,15 @@
 	    	 android:singleLine="true"
 	         android:ellipsize="end"
 	         android:text="@string/app_name" />    
-    </LinearLayout>          
+    </LinearLayout>   
+    
+    <ImageView
+        android:background="@drawable/play_background"
+        android:id="@+id/play_icon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="right"        
+        android:clickable="false"
+        android:layout_margin="7dp"
+        android:src="@drawable/ic_action_play_over_vide" />
 </FrameLayout>

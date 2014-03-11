@@ -10,6 +10,7 @@ import com.android.volley.toolbox.Volley;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -40,11 +41,13 @@ public class Video_adapter extends ArrayAdapter < Object > {
 	private static class PlaceHolder {
 		TextView title, duration;
 		NetworkImageView imageView;
+		ImageView icon;
 		
 		public static PlaceHolder generate(View convertView) {
 			PlaceHolder placeHolder = new PlaceHolder();
 			placeHolder.title = (TextView) convertView.findViewById(R.id.video_textview_title);
 			placeHolder.imageView = (NetworkImageView) convertView.findViewById(R.id.video_imageView);
+			placeHolder.icon = (ImageView) convertView.findViewById(R.id.play_icon);
 			placeHolder.duration = (TextView) convertView.findViewById(R.id.video_textview_duration);			
 			return placeHolder;
 		}
@@ -53,6 +56,7 @@ public class Video_adapter extends ArrayAdapter < Object > {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		PlaceHolder placeHolder;
 		String imageUrl = videos.get(position).getImageUrl();
+		Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/sintony.otf");
 		
 		if (convertView == null) {
 			convertView = View.inflate(context, isTablet(context) ? R.layout.item_videos_tablet :R.layout.item_videos, null);
@@ -64,9 +68,12 @@ public class Video_adapter extends ArrayAdapter < Object > {
 		}
 		
 		 placeHolder.duration.setText(videos.get(position).getDuration());
+		 placeHolder.duration.setTypeface(font);
 		 placeHolder.imageView.setDefaultImageResId(R.drawable.smosh);
          placeHolder.imageView.setImageUrl(imageUrl, imageloader);
+         placeHolder.icon.setImageResource(R.drawable.ic_action_play_over_vide);
 		 //imageloader.get(imageUrl, ImageLoader.getImageListener(placeHolder.imageView, R.drawable.smosh, R.drawable.smosh));
+         placeHolder.title.setTypeface(font);
 		 placeHolder.title.setText(videos.get(position).getTitle());
 
 		return (convertView);

@@ -980,15 +980,22 @@ containing a value of this type.
         public static final int abc_textfield_searchview_holo_light=0x7f020054;
         public static final int abc_textfield_searchview_right_holo_dark=0x7f020055;
         public static final int abc_textfield_searchview_right_holo_light=0x7f020056;
-        public static final int email=0x7f020057;
-        public static final int facebook=0x7f020058;
-        public static final int ic_action_refresh=0x7f020059;
-        public static final int ic_action_settings=0x7f02005a;
-        public static final int ic_launcher=0x7f02005b;
-        public static final int mas=0x7f02005c;
-        public static final int smosh=0x7f02005d;
-        public static final int textview_background=0x7f02005e;
-        public static final int twitter=0x7f02005f;
+        public static final int button_flat_c=0x7f020057;
+        public static final int button_flat_normal_c=0x7f020058;
+        public static final int button_flat_normal_r=0x7f020059;
+        public static final int button_flat_pressed_c=0x7f02005a;
+        public static final int button_flat_r=0x7f02005b;
+        public static final int email=0x7f02005c;
+        public static final int facebook=0x7f02005d;
+        public static final int ic_action_play_over_vide=0x7f02005e;
+        public static final int ic_action_refresh=0x7f02005f;
+        public static final int ic_action_settings=0x7f020060;
+        public static final int ic_launcher=0x7f020061;
+        public static final int mas=0x7f020062;
+        public static final int play_background=0x7f020063;
+        public static final int smosh=0x7f020064;
+        public static final int textview_background=0x7f020065;
+        public static final int twitter=0x7f020066;
     }
     public static final class id {
         public static final int Relativ=0x7f06003f;
@@ -999,13 +1006,13 @@ containing a value of this type.
         public static final int action_bar_root=0x7f06001a;
         public static final int action_bar_subtitle=0x7f060023;
         public static final int action_bar_title=0x7f060022;
-        public static final int action_contact=0x7f060048;
+        public static final int action_contact=0x7f060049;
         public static final int action_context_bar=0x7f06001d;
         public static final int action_menu_divider=0x7f060016;
         public static final int action_menu_presenter=0x7f060017;
         public static final int action_mode_close_button=0x7f060024;
-        public static final int action_refresh=0x7f060046;
-        public static final int action_settings=0x7f060047;
+        public static final int action_refresh=0x7f060047;
+        public static final int action_settings=0x7f060048;
         public static final int activity_chooser_view_content=0x7f060025;
         public static final int always=0x7f06000b;
         public static final int beginning=0x7f060011;
@@ -1030,12 +1037,13 @@ containing a value of this type.
         public static final int never=0x7f060009;
         public static final int none=0x7f060010;
         public static final int normal=0x7f060000;
-        public static final int player=0x7f060045;
-        public static final int progress=0x7f060044;
+        public static final int play_icon=0x7f060043;
+        public static final int player=0x7f060046;
+        public static final int progress=0x7f060045;
         public static final int progressBar=0x7f06003c;
-        public static final int progressBar1=0x7f060043;
         public static final int progress_circular=0x7f060018;
         public static final int progress_horizontal=0x7f060019;
+        public static final int progressbar_add=0x7f060044;
         public static final int radio=0x7f06002f;
         public static final int search_badge=0x7f060032;
         public static final int search_bar=0x7f060031;
@@ -1168,9 +1176,35 @@ containing a value of this type.
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
         public static final int abc_shareactionprovider_share_with_application=0x7f0b000b;
-        public static final int action_settings=0x7f0b000e;
         public static final int app_name=0x7f0b000d;
-        public static final int hello_world=0x7f0b000f;
+        /**  Contact 
+         */
+        public static final int contact=0x7f0b000e;
+        public static final int contact_us=0x7f0b0016;
+        public static final int developer=0x7f0b000f;
+        public static final int do_you_want=0x7f0b0015;
+        public static final int email=0x7f0b0011;
+        public static final int facebook_page=0x7f0b0012;
+        public static final int i_want_app=0x7f0b0017;
+        public static final int infinite_scrolling=0x7f0b001d;
+        public static final int infinite_scrolling_desc=0x7f0b001e;
+        public static final int internet_problem=0x7f0b001a;
+        /**  Main Activity 
+         */
+        public static final int load_more=0x7f0b0019;
+        public static final int market_dev=0x7f0b0013;
+        public static final int more_apps=0x7f0b0014;
+        public static final int no_market_problem=0x7f0b0018;
+        public static final int notifications=0x7f0b001f;
+        public static final int notifications_desc=0x7f0b0020;
+        /**  Preferences 
+         */
+        public static final int settings=0x7f0b001c;
+        public static final int twitter=0x7f0b0010;
+        public static final int wait_downloading=0x7f0b001b;
+        /**  Download Service 
+         */
+        public static final int youtubeUser=0x7f0b0021;
     }
     public static final class style {
         /** 

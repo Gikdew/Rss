@@ -24,7 +24,6 @@ import android.widget.Toast;
 public class DownloadService extends Service {
 	
 	public ArrayList < Video > Array_Video = new ArrayList < Video > ();
-    private static final String DEBUG_TAG = "TutListDownloaderService";
     Exception error;
     
 	ConfigClass c = new ConfigClass();
@@ -49,6 +48,7 @@ public class DownloadService extends Service {
     	
     	@Override
     	protected void onPreExecute() {
+    		sendNotification();
     		if(!lastVideo.contains("day") || !lastVideo.contains("hour") || !lastVideo.contains("minute") || !lastVideo.contains("lastUrl") ){
     			editor.putInt("day", 0);
     			editor.commit();
@@ -142,8 +142,8 @@ public class DownloadService extends Service {
 			NotificationCompat.Builder mBuilder =  new NotificationCompat.Builder(DownloadService.this); 
 					 
 			mBuilder.setContentTitle("New Video!")
-					.setContentText(youtubeUser + " has uploaded a new video!")
-					.setTicker(youtubeUser + " has uploaded a new video!")
+					.setContentText(getText(R.string.youtubeUser) + " has uploaded a new video!")
+					.setTicker(getText(R.string.youtubeUser) + " has uploaded a new video!")
 					.setSmallIcon(R.drawable.ic_launcher)
 					.setContentIntent(pIntent)
 					.setAutoCancel(true)

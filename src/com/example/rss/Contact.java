@@ -84,7 +84,7 @@ public class Contact extends ActionBarActivity {
 		final ImageButton foto_twitter = new ImageButton(this);
 		params = new RelativeLayout.LayoutParams((int)(w * 0.15), (int)(h * 0.09));
 		params.leftMargin = (int)(w * 0.10);
-		params.topMargin = (int)(h * 0.25);
+		params.topMargin = (int)(h * 0.28);
 		foto_twitter.setBackgroundResource(R.drawable.twitter);
 		rl.addView(foto_twitter, params);
 
@@ -98,7 +98,7 @@ public class Contact extends ActionBarActivity {
 		final ImageButton foto_facebook = new ImageButton(this);
 		params = new RelativeLayout.LayoutParams((int)(w * 0.15), (int)(h * 0.09));
 		params.leftMargin = (int)(w * 0.10);
-		params.topMargin = (int)(h * 0.54);
+		params.topMargin = (int)(h * 0.51);
 		foto_facebook.setBackgroundResource(R.drawable.facebook);
 		rl.addView(foto_facebook, params);
 
@@ -125,7 +125,7 @@ public class Contact extends ActionBarActivity {
 		TextView twitter2 = new TextView(this);
 		params = new RelativeLayout.LayoutParams((int)(w * 0.9), (int)(h * 0.09));
 		params.leftMargin = (int)(w * 0.30);
-		params.topMargin = (int)(h * 0.25);
+		params.topMargin = (int)(h * 0.28);
 		twitter2.setText("@" + getText(R.string.twitter));
 		twitter2.setTypeface(font);
 		twitter2.setGravity(Gravity.CENTER_VERTICAL);
@@ -144,7 +144,7 @@ public class Contact extends ActionBarActivity {
 		TextView facebook = new TextView(this);
 		params = new RelativeLayout.LayoutParams((int)(w * 0.9), (int)(h * 0.09));
 		params.leftMargin = (int)(w * 0.30);
-		params.topMargin = (int)(h * 0.54);
+		params.topMargin = (int)(h * 0.51);
 		facebook.setText(getText(R.string.developer));
 		facebook.setTypeface(font);
 		facebook.setGravity(Gravity.CENTER_VERTICAL);
@@ -220,8 +220,8 @@ public class Contact extends ActionBarActivity {
 			Override
 			public void onClick(View v) {
 				Intent email = new Intent(Intent.ACTION_SEND);
-				email.putExtra(Intent.EXTRA_EMAIL, R.string.email);
-				email.putExtra(Intent.EXTRA_SUBJECT, R.string.i_want_app);
+				email.putExtra(Intent.EXTRA_EMAIL, new String[] { (String) getText(R.string.email)});
+				email.putExtra(Intent.EXTRA_SUBJECT, getText(R.string.i_want_app));
 				email.putExtra(Intent.EXTRA_TEXT, "");
 				email.setType("message/rfc822");
 				startActivity(Intent.createChooser(email, null));

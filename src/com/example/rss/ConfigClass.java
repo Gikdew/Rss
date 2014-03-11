@@ -1,12 +1,11 @@
 package com.example.rss;
 
 public class ConfigClass {
-	
-	
-	String youtubeUser = "Willyrex"; //UCtGG8ucQgEJPeUPhJZ4M4jA
-	String playlistID = "A84B69B84AF29E41";
+		
+	String youtubeUser = "Smosh"; //UCtGG8ucQgEJPeUPhJZ4M4jA
+	String playlistID = "PLoXXK_fwj8TXR_ikX1HzbKjaNcmiZhU5E"; 
 	Boolean playlistMode = false; //Not imlemented yet (Always false)
-	int perPage = playlistMode ? 25 : 10; //Number of results per page
+	int perPage = 10; //Number of results per page
 	int startIndex = 1; //First result to get
 	int velocity = 2 ; //Number reccomended between [1,2,3,4] Scroll Velocity
 	String DEVELOPER_KEY = "AIzaSyDsbCn-hOTV6yTpSKW_syy78D2rS39yXt8"; //Youtube Developer Key
@@ -25,7 +24,8 @@ public class ConfigClass {
 					"&alt=rss";
 		}else{
 			return "https://gdata.youtube.com/feeds/api/playlists/"+ playlistID +"?v=2" + 
-					"&start-index=" + String.valueOf(startPos);
+					"&start-index=" + String.valueOf(startPos) + "&alt=rss" + 
+					"&max-results=" + String.valueOf(pageNumber);
 		}
 		
 	}

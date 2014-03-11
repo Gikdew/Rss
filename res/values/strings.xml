@@ -31,5 +31,6 @@
     
     <!-- Download Service -->
     <string name="youtubeUser">Willyrex</string>
+    <string name="new_video">has uploaded a new video!</string>
 
 </resources>

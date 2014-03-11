@@ -794,10 +794,11 @@ containing a value of this type.
         public static final int abc_split_action_bar_is_narrow=0x7f070002;
     }
     public static final class color {
-        public static final int abc_search_url_text_holo=0x7f080003;
+        public static final int abc_search_url_text_holo=0x7f080004;
         public static final int abc_search_url_text_normal=0x7f080000;
         public static final int abc_search_url_text_pressed=0x7f080002;
         public static final int abc_search_url_text_selected=0x7f080001;
+        public static final int apptheme_color=0x7f080003;
     }
     public static final class dimen {
         /**  Default height of an action bar. 
@@ -980,22 +981,75 @@ containing a value of this type.
         public static final int abc_textfield_searchview_holo_light=0x7f020054;
         public static final int abc_textfield_searchview_right_holo_dark=0x7f020055;
         public static final int abc_textfield_searchview_right_holo_light=0x7f020056;
-        public static final int button_flat_c=0x7f020057;
-        public static final int button_flat_normal_c=0x7f020058;
-        public static final int button_flat_normal_r=0x7f020059;
-        public static final int button_flat_pressed_c=0x7f02005a;
-        public static final int button_flat_r=0x7f02005b;
-        public static final int email=0x7f02005c;
-        public static final int facebook=0x7f02005d;
-        public static final int ic_action_play_over_vide=0x7f02005e;
-        public static final int ic_action_refresh=0x7f02005f;
-        public static final int ic_action_settings=0x7f020060;
-        public static final int ic_launcher=0x7f020061;
-        public static final int mas=0x7f020062;
-        public static final int play_background=0x7f020063;
-        public static final int smosh=0x7f020064;
-        public static final int textview_background=0x7f020065;
-        public static final int twitter=0x7f020066;
+        public static final int apptheme_activated_background_holo_light=0x7f020057;
+        public static final int apptheme_btn_check_holo_light=0x7f020058;
+        public static final int apptheme_btn_check_off_disabled_focused_holo_light=0x7f020059;
+        public static final int apptheme_btn_check_off_disabled_holo_light=0x7f02005a;
+        public static final int apptheme_btn_check_off_focused_holo_light=0x7f02005b;
+        public static final int apptheme_btn_check_off_holo_light=0x7f02005c;
+        public static final int apptheme_btn_check_off_pressed_holo_light=0x7f02005d;
+        public static final int apptheme_btn_check_on_disabled_focused_holo_light=0x7f02005e;
+        public static final int apptheme_btn_check_on_disabled_holo_light=0x7f02005f;
+        public static final int apptheme_btn_check_on_focused_holo_light=0x7f020060;
+        public static final int apptheme_btn_check_on_holo_light=0x7f020061;
+        public static final int apptheme_btn_check_on_pressed_holo_light=0x7f020062;
+        public static final int apptheme_btn_default_disabled_focused_holo_light=0x7f020063;
+        public static final int apptheme_btn_default_disabled_holo_light=0x7f020064;
+        public static final int apptheme_btn_default_focused_holo_light=0x7f020065;
+        public static final int apptheme_btn_default_holo_light=0x7f020066;
+        public static final int apptheme_btn_default_normal_holo_light=0x7f020067;
+        public static final int apptheme_btn_default_pressed_holo_light=0x7f020068;
+        public static final int apptheme_btn_toggle_holo_light=0x7f020069;
+        public static final int apptheme_btn_toggle_off_disabled_focused_holo_light=0x7f02006a;
+        public static final int apptheme_btn_toggle_off_disabled_holo_light=0x7f02006b;
+        public static final int apptheme_btn_toggle_off_focused_holo_light=0x7f02006c;
+        public static final int apptheme_btn_toggle_off_normal_holo_light=0x7f02006d;
+        public static final int apptheme_btn_toggle_off_pressed_holo_light=0x7f02006e;
+        public static final int apptheme_btn_toggle_on_disabled_focused_holo_light=0x7f02006f;
+        public static final int apptheme_btn_toggle_on_disabled_holo_light=0x7f020070;
+        public static final int apptheme_btn_toggle_on_focused_holo_light=0x7f020071;
+        public static final int apptheme_btn_toggle_on_normal_holo_light=0x7f020072;
+        public static final int apptheme_btn_toggle_on_pressed_holo_light=0x7f020073;
+        public static final int apptheme_fastscroll_thumb_default_holo=0x7f020074;
+        public static final int apptheme_fastscroll_thumb_holo=0x7f020075;
+        public static final int apptheme_fastscroll_thumb_pressed_holo=0x7f020076;
+        public static final int apptheme_item_background_holo_light=0x7f020077;
+        public static final int apptheme_list_activated_holo=0x7f020078;
+        public static final int apptheme_list_focused_holo=0x7f020079;
+        public static final int apptheme_list_longpressed_holo=0x7f02007a;
+        public static final int apptheme_list_pressed_holo_light=0x7f02007b;
+        public static final int apptheme_list_selector_background_transition_holo_light=0x7f02007c;
+        public static final int apptheme_list_selector_disabled_holo_light=0x7f02007d;
+        public static final int apptheme_list_selector_holo_light=0x7f02007e;
+        public static final int apptheme_progress_bg_holo_light=0x7f02007f;
+        public static final int apptheme_progress_horizontal_holo_light=0x7f020080;
+        public static final int apptheme_progress_indeterminate_horizontal_holo_light=0x7f020081;
+        public static final int apptheme_progress_primary_holo_light=0x7f020082;
+        public static final int apptheme_progress_secondary_holo_light=0x7f020083;
+        public static final int apptheme_progressbar_indeterminate_holo1=0x7f020084;
+        public static final int apptheme_progressbar_indeterminate_holo2=0x7f020085;
+        public static final int apptheme_progressbar_indeterminate_holo3=0x7f020086;
+        public static final int apptheme_progressbar_indeterminate_holo4=0x7f020087;
+        public static final int apptheme_progressbar_indeterminate_holo5=0x7f020088;
+        public static final int apptheme_progressbar_indeterminate_holo6=0x7f020089;
+        public static final int apptheme_progressbar_indeterminate_holo7=0x7f02008a;
+        public static final int apptheme_progressbar_indeterminate_holo8=0x7f02008b;
+        public static final int button_flat_c=0x7f02008c;
+        public static final int button_flat_normal_c=0x7f02008d;
+        public static final int button_flat_normal_r=0x7f02008e;
+        public static final int button_flat_pressed_c=0x7f02008f;
+        public static final int button_flat_r=0x7f020090;
+        public static final int email=0x7f020091;
+        public static final int facebook=0x7f020092;
+        public static final int ic_action_play_over_vide=0x7f020093;
+        public static final int ic_action_refresh=0x7f020094;
+        public static final int ic_action_settings=0x7f020095;
+        public static final int ic_launcher=0x7f020096;
+        public static final int mas=0x7f020097;
+        public static final int play_background=0x7f020098;
+        public static final int smosh=0x7f020099;
+        public static final int textview_background=0x7f02009a;
+        public static final int twitter=0x7f02009b;
     }
     public static final class id {
         public static final int Relativ=0x7f06003f;
@@ -1194,6 +1248,7 @@ containing a value of this type.
         public static final int load_more=0x7f0b0019;
         public static final int market_dev=0x7f0b0013;
         public static final int more_apps=0x7f0b0014;
+        public static final int new_video=0x7f0b0022;
         public static final int no_market_problem=0x7f0b0018;
         public static final int notifications=0x7f0b001f;
         public static final int notifications_desc=0x7f0b0020;
@@ -1233,6 +1288,13 @@ containing a value of this type.
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f0c0084;
+        public static final int ButtonAppTheme=0x7f0c0086;
+        public static final int CheckBoxAppTheme=0x7f0c0085;
+        public static final int ImageButtonAppTheme=0x7f0c0087;
+        public static final int ListViewAppTheme=0x7f0c008a;
+        public static final int ListViewAppTheme_White=0x7f0c008b;
+        public static final int ProgressBarAppTheme=0x7f0c0088;
+        public static final int SpinnerItemAppTheme=0x7f0c008c;
         /**  Mimic text appearance in select_dialog_item.xml 
          */
         public static final int TextAppearance_AppCompat_Base_CompactMenu_Dialog=0x7f0c0063;
@@ -1326,6 +1388,7 @@ containing a value of this type.
         /**  Base platform-dependent theme providing a light-themed activity. 
          */
         public static final int Theme_Base_Light=0x7f0c007d;
+        public static final int ToggleAppTheme=0x7f0c0089;
         /**  Styles in here can be extended for customisation in your application. Each utilises
          one of the Base styles. If Holo themes are available on the current platform version
          they will be used instead of the compat styles. 
@@ -1420,6 +1483,7 @@ containing a value of this type.
         public static final int Widget_AppCompat_ProgressBar=0x7f0c000a;
         public static final int Widget_AppCompat_ProgressBar_Horizontal=0x7f0c0009;
         public static final int Widget_AppCompat_Spinner_DropDown_ActionBar=0x7f0c0022;
+        public static final int _AppTheme=0x7f0c008d;
     }
     public static final class xml {
         public static final int mis_preferencias=0x7f050000;

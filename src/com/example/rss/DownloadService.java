@@ -67,57 +67,49 @@ public class DownloadService extends Service {
         @Override
         protected Boolean doInBackground(URL... params) {
         	try {
-				if(!c.playlistMode){
-					XMLParser parser = new XMLParser(c.generateUrl(1, 1), DownloadService.this);
-	    			Array_Video = parser.parse();
-				}else{
-					XMLParserList parser = new XMLParserList(c.generateUrl(1, 1), DownloadService.this);
-	    			Array_Video = parser.parse();
-				}		
-        		
+				XMLParser parser = new XMLParser(c.generateUrl(1, 1), DownloadService.this);
+    			Array_Video = parser.parse();        		
     			//Log.i("Service", Array_Video.get(0).getDate().toString());
     			return true;
 			} catch (Exception e) {
 				//Log.i("Service", "Catch in Do in background");
 				return false;
-			}
-        	
-			
+			}	
         }
         
         @Override
         protected void onPostExecute(Boolean result) {
-        	if (result) {
-        		Video video = Array_Video.get(0);
-        		            	
-            	if((video.getDate().getDay() != lastVideo.getInt("day", 0)) || 
-            			(video.getDate().getHours() != lastVideo.getInt("hour", 0)) ||
-            			(video.getDate().getMinutes() != lastVideo.getInt("minute", 0)) || 
-            			!video.getLink().equals(lastVideo.getString("lastUrl", ""))){
-            		
-            		//Log.i("New", "Video");
-            		editor.putInt("day", video.getDate().getDay());
-            		editor.commit();
-            		editor.putInt("minute", video.getDate().getMinutes());
-            		editor.commit();
-            		editor.putInt("hour", video.getDate().getHours());
-            		editor.commit();
-            		editor.putString("lastUrl", video.getLink());
-            		editor.commit();
-            		
-            		if(!lastVideo.contains("firstTime")){
-            			editor.putBoolean("firstTime", false);
-            			editor.commit();
-            		}else{
-            			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());            			          			 
-            			if(preferences.getBoolean("notification", true)){
-            				 sendNotification();
-            			}
-            			
-            		}         		
-            		      		
-            		
-            	} 	
+        	if (result) {        		
+        		Video video = Array_Video.get(0);        		
+        		if((video.getDate().getDay() != lastVideo.getInt("day", 0)) || 
+                			(video.getDate().getHours() != lastVideo.getInt("hour", 0)) ||
+                			(video.getDate().getMinutes() != lastVideo.getInt("minute", 0)) || 
+                			!video.getLink().equals(lastVideo.getString("lastUrl", ""))){
+                		
+                		//Log.i("New", "Video");
+                		editor.putInt("day", video.getDate().getDay());
+                		editor.commit();
+                		editor.putInt("minute", video.getDate().getMinutes());
+                		editor.commit();
+                		editor.putInt("hour", video.getDate().getHours());
+                		editor.commit();
+                		editor.putString("lastUrl", video.getLink());
+                		editor.commit();
+                		
+                		if(!lastVideo.contains("firstTime")){
+                			editor.putBoolean("firstTime", false);
+                			editor.commit();
+                		}else{
+                			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());            			          			 
+                			if(preferences.getBoolean("notification", true)){
+                				 sendNotification();
+                			}
+                			
+                		}    		
+                		      		
+                		
+                	
+        		}
             	
 	         } else {
 	            if (error != null) {
@@ -142,8 +134,8 @@ public class DownloadService extends Service {
 			NotificationCompat.Builder mBuilder =  new NotificationCompat.Builder(DownloadService.this); 
 					 
 			mBuilder.setContentTitle("New Video!")
-					.setContentText(getText(R.string.youtubeUser) + " has uploaded a new video!")
-					.setTicker(getText(R.string.youtubeUser) + " has uploaded a new video!")
+					.setContentText(getText(R.string.youtubeUser) + " " + getText(R.string.new_video))
+					.setTicker(getText(R.string.youtubeUser) + " " + getText(R.string.new_video))
 					.setSmallIcon(R.drawable.ic_launcher)
 					.setContentIntent(pIntent)
 					.setAutoCancel(true)

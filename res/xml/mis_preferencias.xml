@@ -13,5 +13,5 @@
     android:title="@string/infinite_scrolling" 
     android:summary="@string/infinite_scrolling_desc"
     android:defaultValue="true"/>    
-
+	
 </PreferenceScreen>

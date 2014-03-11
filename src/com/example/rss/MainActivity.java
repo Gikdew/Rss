@@ -97,7 +97,7 @@ public class MainActivity extends ActionBarActivity {
 			  
 			   	editor.putInt("counter", ads.getInt("counter", 0)+1);
 			   	editor.commit();			  
-			   	if(appnext && ads.getInt("counter", 0) == adsEvery){
+			   	if(appnext && ads.getInt("counter", 0) >= adsEvery){
 			   		
 			   		editor.putInt("counter", 0);
 				   	editor.commit();	
@@ -105,17 +105,17 @@ public class MainActivity extends ActionBarActivity {
 			   		Intent intent = new Intent(MainActivity.this, mainToVideo.class);
 				    String video = Array_Video.get(position).getLink();
 				    intent.putExtra("videoURL", video);
-				    //Toast.makeText(MainActivity.this, video, Toast.LENGTH_SHORT).show();
-				    moveTaskToBack(true); 
+				    //Toast.makeText(MainActivity.this, video, Toast.LENGTH_SHORT).show();				    
 				    startActivity(intent);
-				    
+				    				    
 			   	}else{
 			   		Intent intent = new Intent(MainActivity.this, VideoActivity.class);
 				    String video = Array_Video.get(position).getLink();
 				    intent.putExtra("videoURL", video);
 				    //Toast.makeText(MainActivity.this, video, Toast.LENGTH_SHORT).show();
-				    moveTaskToBack(true); 
+				    //moveTaskToBack(true); 
 				    startActivity(intent);
+				    
 			   	}
 			   	Log.i("Counter", String.valueOf(ads.getInt("counter", 0)));
 			  	
@@ -239,15 +239,9 @@ public class MainActivity extends ActionBarActivity {
 		@Override
 		protected Boolean doInBackground(final String...args) {
 			try {
-				if(!c.playlistMode){
-					XMLParser parser = new XMLParser(feedUrl, getBaseContext());
-					Array_1 = parser.parse();
-				}else{
-					XMLParserList parser = new XMLParserList(feedUrl, getBaseContext());
-					Array_1 = parser.parse();
-				}				
-				
-				Array_Video.addAll(Array_1);
+				XMLParser parser = new XMLParser(feedUrl, getBaseContext());
+				Array_1 = parser.parse();
+				Array_Video.addAll(Array_1);									
 	             return true;
 	        } catch (Exception e) {	            
 	        	return false;
@@ -322,13 +316,8 @@ public class MainActivity extends ActionBarActivity {
 		@Override
 		protected Boolean doInBackground(String... params) {
 			try {				
-				if(!c.playlistMode){
-					XMLParser parser = new XMLParser(feedUrl, getBaseContext());
-					Array_Video = parser.parse();
-				}else{
-					XMLParserList parser = new XMLParserList(feedUrl, getBaseContext());
-					Array_Video = parser.parse();
-				}		
+				XMLParser parser = new XMLParser(feedUrl, getBaseContext());
+				Array_Video = parser.parse();						
 	             return true;
 	        } catch (Exception e) {	            
 	        	return false;

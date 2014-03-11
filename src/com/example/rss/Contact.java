@@ -1,6 +1,5 @@
 package com.example.rss;
 
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +12,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -59,7 +57,7 @@ public class Contact extends ActionBarActivity {
 			ratio1 = ratio_h;
 		}
 
-		final Double ratio = ratio1;
+		//final Double ratio = ratio1;
 		final Double min_ratio = ratio2;
 		////////////////////////////////////////
 		////////////////////////////////////////

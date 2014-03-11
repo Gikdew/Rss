@@ -15,9 +15,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import android.app.DownloadManager.Query;
 import android.content.Context;
-import android.util.Log;
+
 
 public class XMLParser {
 	private URL url;
@@ -33,7 +32,6 @@ public class XMLParser {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	public ArrayList < Video > parse() {
 		
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -45,7 +43,6 @@ public class XMLParser {
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			Document dom = builder.parse(this.url.openConnection().getInputStream());
 			Element root = dom.getDocumentElement();
-			String query, date;
 			NodeList items = root.getElementsByTagName("item");
 			for (int i = 0; i < items.getLength(); i++) {
 				Video = new Video();

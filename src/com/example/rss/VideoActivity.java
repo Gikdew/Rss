@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.Window;
 import android.widget.Toast;
 
-import com.appnext.appnextsdk.Appnext;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
@@ -34,10 +33,6 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
 		youTubeView = (YouTubePlayerView)	findViewById(R.id.player);
 		youTubeView.initialize(DEVELOPER_KEY, this);
 		
-		final SharedPreferences ads = getSharedPreferences("Ads", Context.MODE_PRIVATE);
-        final Editor editor = ads.edit();
-        
-       
 	}
 
 	@Override

@@ -48,7 +48,7 @@ public class DownloadService extends Service {
     	
     	@Override
     	protected void onPreExecute() {
-    		sendNotification();
+    		
     		if(!lastVideo.contains("day") || !lastVideo.contains("hour") || !lastVideo.contains("minute") || !lastVideo.contains("lastUrl") ){
     			editor.putInt("day", 0);
     			editor.commit();

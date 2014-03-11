@@ -52,8 +52,8 @@
     <ImageView
         android:background="@drawable/play_background"
         android:id="@+id/play_icon"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_gravity="right"        
         android:clickable="false"
         android:layout_margin="3dp"
